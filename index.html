@@ -2,111 +2,138 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>PUNTO SUR SURESTE · Noticias del Sureste</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600&family=Montserrat:wght@700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel · PUNTO SUR SURESTE</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    :root{--rojo:#C62828;--azul:#1E3A5F;--blanco:#FFFFFF;--gris-carbon:#2E2E2E;--gris-suave:#E5E5E5}
-    body{font-family:'Inter',sans-serif;background:var(--blanco);color:var(--gris-carbon);line-height:1.5;font-size:16px}
-    .top-bar{background:var(--azul);color:white;font-size:12px;padding:6px 16px;display:flex;justify-content:space-between;flex-wrap:wrap;font-family:'Poppins',sans-serif}
-    .top-bar a{color:#ccc;text-decoration:none;margin-left:12px}
-    .top-bar a:hover{color:var(--rojo)}
-    .header{padding:16px 20px 12px;border-bottom:1px solid var(--gris-suave);background:white}
-    .logo{font-family:'Montserrat',sans-serif;font-size:32px;font-weight:800;letter-spacing:-0.5px;color:var(--gris-carbon);text-decoration:none}
-    .logo .rojo{color:var(--rojo)}.logo .gris{color:#6c6c6c}
-    .frase{font-family:'Poppins',sans-serif;font-size:12px;color:#4a4a4a;margin-top:4px}
-    nav{background:var(--gris-carbon);display:flex;flex-wrap:wrap;justify-content:center;position:sticky;top:0;z-index:100}
-    nav a{color:#ddd;font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;text-transform:uppercase;padding:12px 16px;text-decoration:none;border-bottom:2px solid transparent}
-    nav a:hover,nav a.active{background:var(--rojo);color:white;border-bottom-color:white}
-    .ticker{background:var(--rojo);color:white;padding:6px 12px;font-size:13px;font-family:'Poppins',sans-serif;overflow:hidden;white-space:nowrap}
-    .ticker-content{display:inline-block;animation:scrollTicker 35s linear infinite}
-    .ticker-content span::after{content:" • ";margin:0 6px;opacity:0.7}
-    @keyframes scrollTicker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-    .container{max-width:1100px;margin:0 auto;padding:20px 16px}
-    .hero{display:grid;grid-template-columns:1fr;gap:28px;margin-bottom:40px}
-    @media(min-width:760px){.hero{grid-template-columns:2fr 1fr}}
-    .principal img{width:100%;aspect-ratio:16/9;object-fit:cover;margin-bottom:12px}
-    .categoria{color:var(--rojo);font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;text-transform:uppercase;margin-bottom:6px}
-    .titulo-principal{font-family:'Montserrat',sans-serif;font-size:26px;font-weight:800;line-height:1.2;margin-bottom:8px;cursor:pointer}
-    .resumen{color:#4a4a4a;font-size:15px;margin-bottom:8px}
-    .fecha-autor{font-size:12px;color:#7a7a7a;font-family:'Poppins',sans-serif}
-    .secundarias{display:flex;flex-direction:column;gap:20px}
-    .secundaria{border-bottom:1px solid var(--gris-suave);padding-bottom:12px;cursor:pointer}
-    .secundaria img{width:100%;aspect-ratio:3/2;object-fit:cover;margin-bottom:8px}
-    .titulo-sec{font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;line-height:1.3}
-    .section-title{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:800;border-left:6px solid var(--rojo);padding-left:12px;margin:32px 0 20px}
-    .grid-noticias{display:grid;grid-template-columns:1fr;gap:24px}
-    @media(min-width:640px){.grid-noticias{grid-template-columns:repeat(2,1fr)}}
-    @media(min-width:900px){.grid-noticias{grid-template-columns:repeat(3,1fr)}}
-    .card{cursor:pointer;border-bottom:1px solid var(--gris-suave);padding-bottom:12px}
-    .card img{width:100%;aspect-ratio:3/2;object-fit:cover;margin-bottom:8px}
-    .card h3{font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;margin:6px 0}
-    .article-view{max-width:780px;margin:0 auto;padding:20px}
-    .article-view img{width:100%;aspect-ratio:16/9;object-fit:cover;margin:16px 0}
-    .article-view .cuerpo{font-size:17px;line-height:1.65}
-    .article-view .cuerpo p{margin-bottom:1.2em}
-    .btn-volver{background:none;border:none;color:var(--rojo);font-weight:600;cursor:pointer;margin-bottom:20px;font-family:'Poppins',sans-serif}
-    footer{background:var(--gris-carbon);color:#ccc;padding:32px 20px 20px;margin-top:48px;font-family:'Poppins',sans-serif;font-size:13px}
-    .footer-inner{max-width:1100px;margin:0 auto;display:grid;gap:24px}
-    @media(min-width:640px){.footer-inner{grid-template-columns:2fr 1fr 1fr}}
-    .footer-logo{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:800}
-    .footer-logo .rojo{color:var(--rojo)}
-    .footer-links a{display:block;color:#bbb;text-decoration:none;margin-bottom:6px}
-    .footer-links a:hover{color:var(--rojo)}
-    .copy{text-align:center;border-top:1px solid #444;padding-top:20px;margin-top:20px;font-size:12px}
-    .loader{text-align:center;padding:40px;color:#4a4a4a}
+    body{font-family:system-ui;background:#f4f4f4;padding:20px}
+    .login-box,.admin-panel{max-width:1200px;margin:40px auto;background:white;padding:24px;border-radius:8px}
+    h1{border-left:6px solid #C62828;padding-left:16px;margin-bottom:20px}
+    input,textarea,select{width:100%;padding:10px;margin:8px 0;border:1px solid #ccc;border-radius:6px}
+    button{background:#C62828;color:white;border:none;padding:10px 20px;border-radius:6px;cursor:pointer}
+    button.secondary{background:#2E2E2E}
+    table{width:100%;border-collapse:collapse;margin-top:20px}
+    th,td{padding:10px;text-align:left;border-bottom:1px solid #ddd}
+    .error{color:#b71c1c;background:#ffebee;padding:10px;margin-top:10px}
   </style>
 </head>
 <body>
-<div class="top-bar"><span>📅 <span id="fecha-actual"></span> · 🌎 Sureste, México</span><span><a href="/admin">✎ Redacción</a></span></div>
-<div class="header"><a href="/" class="logo" id="logo-link">PUNTO <span class="rojo">SUR</span> <span class="gris">SURESTE</span></a><div class="frase">Noticias del Sureste, información al momento.</div></div>
-<nav id="main-nav"><a href="#" data-cat="inicio" class="active">Inicio</a><a href="#" data-cat="Sureste">Sureste</a><a href="#" data-cat="Nacional">Nacional</a><a href="#" data-cat="Seguridad">Seguridad</a><a href="#" data-cat="Deportes">Deportes</a></nav>
-<div class="ticker" id="tickerBar"><div class="ticker-content" id="tickerText">Cargando...</div></div>
-<main class="container" id="main-content"><div class="loader">Cargando...</div></main>
-<footer><div class="footer-inner"><div><div class="footer-logo">PUNTO <span class="rojo">SUR</span> SURESTE</div><p style="margin-top:8px;">Periodismo independiente desde Chiapas para todo el sureste.</p></div><div class="footer-links"><strong>Secciones</strong><a href="#" data-cat="Sureste">Sureste</a><a href="#" data-cat="Nacional">Nacional</a><a href="#" data-cat="Seguridad">Seguridad</a><a href="#" data-cat="Deportes">Deportes</a></div><div class="footer-links"><strong>Contacto</strong><a href="mailto:redaccion@puntosursureste.mx">redaccion@puntosursureste.mx</a><a href="#">Aviso de privacidad</a></div></div><div class="copy">© 2026 PUNTO SUR SURESTE · Hecho en Chiapas, México</div></footer>
+<div id="loginSection" class="login-box">
+  <h1>Acceso redacción</h1>
+  <label>Token de administrador</label>
+  <input type="password" id="tokenInput" placeholder="Ingrese token">
+  <button onclick="login()">Entrar</button>
+  <div id="loginMsg"></div>
+</div>
+<div id="adminPanel" style="display:none;" class="admin-panel">
+  <h1>📝 Publicaciones</h1>
+  <button onclick="mostrarFormulario()">+ Nueva nota</button>
+  <div id="formContainer" style="display:none; border:1px solid #ddd; padding:16px; margin:20px 0;"></div>
+  <div id="listaNotas"></div>
+  <button onclick="logout()" class="secondary">Cerrar sesión</button>
+</div>
 <script>
-  const WORKER_URL = "https://puntosur.vinceremx.workers.dev/"; // ← CAMBIE AQUÍ
-  let currentView="portada", currentCategory=null;
-  function getCDMXDate(){const now=new Date();return new Date(now.getTime()+now.getTimezoneOffset()*60000-6*3600000);}
-  function formatDate(d){return d.toLocaleDateString('es-MX',{weekday:'short',day:'numeric',month:'short',year:'numeric'}).replace(/\./g,'');}
-  document.getElementById('fecha-actual').innerText=formatDate(getCDMXDate());
-  async function fetchAPI(url,opts={}){const ctrl=new AbortController();const tid=setTimeout(()=>ctrl.abort(),6000);try{const res=await fetch(url,{...opts,signal:ctrl.signal});clearTimeout(tid);return await res.json();}catch(e){clearTimeout(tid);return{ok:false,error:e.message};}}
-  async function getNoticias(cat=null,lim=20,off=0){let u=`${WORKER_URL}/api/noticias?limit=${lim}&offset=${off}`;if(cat)u+=`&categoria=${encodeURIComponent(cat)}`;const d=await fetchAPI(u);return d.ok?d.articulos:[];}
-  async function getNoticiaById(id){const d=await fetchAPI(`${WORKER_URL}/api/noticia?id=${id}`);return d.ok?d.articulo:null;}
-  async function renderPortada(){
-    let arts=await getNoticias(null,30);
-    if(!arts.length){document.getElementById('main-content').innerHTML='<div class="loader">No hay notas aún.</div>';return;}
-    const principal=arts.find(a=>a.es_principal===1)||arts[0];
-    const secundarias=arts.filter(a=>a.id!==principal.id).slice(0,4);
-    const tickerText=arts.slice(0,8).map(a=>a.titulo);
-    document.getElementById('tickerText').innerHTML=tickerText.map(t=>`<span>${t}</span>`).join('')+tickerText.map(t=>`<span>${t}</span>`).join('');
-    const html=`
-      <div class="hero"><div class="principal" onclick="verArticulo(${principal.id})"><img src="${principal.img_url||'https://picsum.photos/seed/puntosur/800/450'}" loading="lazy"><div class="categoria">${principal.categoria}</div><div class="titulo-principal">${principal.titulo}</div><div class="resumen">${principal.resumen||''}</div><div class="fecha-autor">${principal.autor||'Redacción'} · ${new Date(principal.timestamp).toLocaleDateString()}</div></div>
-      <div class="secundarias">${secundarias.map(a=>`<div class="secundaria" onclick="verArticulo(${a.id})"><img src="${a.img_small||a.img_url||'https://picsum.photos/seed/sec/400/250'}" loading="lazy"><div class="categoria">${a.categoria}</div><div class="titulo-sec">${a.titulo}</div><div class="fecha-autor">${a.autor||'Redacción'}</div></div>`).join('')}</div></div>
-      <div class="section-title">📰 Últimas noticias</div><div class="grid-noticias">${arts.slice(2,11).map(a=>`<div class="card" onclick="verArticulo(${a.id})"><img src="${a.img_small||a.img_url||'https://picsum.photos/seed/card/400/250'}" loading="lazy"><div class="categoria">${a.categoria}</div><h3>${a.titulo}</h3><div class="fecha-autor">${a.autor||'Redacción'} · ${new Date(a.timestamp).toLocaleDateString()}</div></div>`).join('')}</div>`;
-    document.getElementById('main-content').innerHTML=html;
-    currentView="portada";window.scrollTo({top:0});
+  const WORKER_URL = "https://puntosur.vinceremx.workers.dev";
+  let token = null;
+
+  async function fetchAdmin(path, method, body = null) {
+    const opts = {
+      method,
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Token': token }
+    };
+    if (body) opts.body = JSON.stringify(body);
+    const res = await fetch(`${WORKER_URL}${path}`, opts);
+    return await res.json();
   }
-  async function renderCategoria(cat){
-    const arts=await getNoticias(cat,30);
-    const html=`<div class="section-title">${cat}</div><div class="grid-noticias">${arts.length?arts.map(a=>;`<div class="card" onclick="verArticulo(${a.id})"><img src="${a.img_small||a.img_url||'https://picsum.photos/seed/cat/400/250'}" loading="lazy"><div class="categoria">${a.categoria}</div><h3>${a.titulo}</h3><div class="fecha-autor">${a.autor||'Redacción'} · ${new Date(a.timestamp).toLocaleDateString()}</div></div>`).join(''):'<div class="loader">No hay notas en esta sección.</div>'}</div>`;
-    document.getElementById('main-content').innerHTML=html;
-    currentView="categoria";currentCategory=cat;window.scrollTo({top:0});
+
+  async function login() {
+    const t = document.getElementById('tokenInput').value.trim();
+    if (!t) return;
+    token = t;
+    try {
+      const data = await fetchAdmin('/api/admin/lista?limit=1', 'GET');
+      if (data.ok === true || data.articulos !== undefined) {
+        localStorage.setItem('puntosur_token', token);
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+        cargarLista();
+      } else {
+        document.getElementById('loginMsg').innerHTML = '<div class="error">Token inválido</div>';
+        token = null;
+      }
+    } catch(e) {
+      document.getElementById('loginMsg').innerHTML = '<div class="error">Error de conexión</div>';
+      token = null;
+    }
   }
-  window.verArticulo=async function(id){
-    const art=await getNoticiaById(id);if(!art)return;
-    const html=`<div class="article-view"><button class="btn-volver" onclick="volver()">← Volver</button><div class="categoria">${art.categoria}${art.es_principal?' · PRINCIPAL':''}</div><h1 style="font-family:'Montserrat',sans-serif;font-size:28px;font-weight:800;margin:12px 0;">${art.titulo}</h1><div class="fecha-autor">${art.autor||'Redacción'} · ${new Date(art.timestamp).toLocaleDateString()} ${art.cargo?'· '+art.cargo:''}</div><img src="${art.img_url||'https://picsum.photos/seed/art/800/450'}" alt="${art.titulo}">${art.resumen?`<div style="background:#f0f0f0;padding:12px;margin:16px 0;font-style:italic;">${art.resumen}</div>`:''}<div class="cuerpo">${(art.cuerpo||'').split('\n').map(p=>`<p>${p}</p>`).join('')}</div></div>`;
-    document.getElementById('main-content').innerHTML=html;
-    currentView="articulo";window.scrollTo({top:0});
-  };
-  window.volver=function(){if(currentCategory&&currentView==="categoria")renderCategoria(currentCategory);else renderPortada();};
-  function setupNav(){
-    document.querySelectorAll('#main-nav a').forEach(link=>{link.addEventListener('click',(e)=>{e.preventDefault();const cat=link.dataset.cat;document.querySelectorAll('#main-nav a').forEach(l=>l.classList.remove('active'));link.classList.add('active');if(cat==='inicio')renderPortada();else renderCategoria(cat);});});
-    document.querySelectorAll('.footer-links a[data-cat]').forEach(link=>{link.addEventListener('click',(e)=>{e.preventDefault();const cat=link.dataset.cat;renderCategoria(cat);document.querySelectorAll('#main-nav a').forEach(l=>{if(l.dataset.cat===cat)l.classList.add('active');else l.classList.remove('active');});});});
-    document.getElementById('logo-link')?.addEventListener('click',(e)=>{e.preventDefault();renderPortada();document.querySelectorAll('#main-nav a').forEach(l=>l.classList.remove('active'));document.querySelector('#main-nav a[data-cat="inicio"]')?.classList.add('active');});
+
+  async function cargarLista() {
+    const data = await fetchAdmin('/api/admin/lista?limit=100', 'GET');
+    const arts = data.articulos || [];
+    const html = `<table><thead><tr><th>ID</th><th>Título</th><th>Categoría</th><th>Autor</th><th>Principal</th><th>Fecha</th><th>Acciones</th></tr></thead><tbody>
+      ${arts.map(a => `<tr><td>${a.id}</td><td>${a.titulo.substring(0,60)}</td><td>${a.categoria}</td><td>${a.autor}</td><td>${a.es_principal?'✅':'❌'}</td><td>${new Date(a.timestamp).toLocaleDateString()}</td><td><button onclick="editarNota(${a.id})">Editar</button> <button onclick="eliminarNota(${a.id})">Eliminar</button></td></tr>`).join('')}
+    </tbody></table>`;
+    document.getElementById('listaNotas').innerHTML = html;
   }
-  renderPortada();setupNav();
+
+  async function eliminarNota(id) {
+    if(!confirm('¿Eliminar?')) return;
+    const res = await fetchAdmin(`/api/admin/eliminar?id=${id}`, 'DELETE');
+    if(res.ok) cargarLista();
+    else alert('Error');
+  }
+
+  function mostrarFormulario(nota = null) {
+    const isEdit = !!nota;
+    const container = document.getElementById('formContainer');
+    container.innerHTML = `
+      <h3>${isEdit ? 'Editar' : 'Nueva nota'}</h3>
+      <input id="titulo" placeholder="Título *" value="${nota?.titulo || ''}">
+      <select id="categoria"><option>Sureste</option><option>Nacional</option><option>Seguridad</option><option>Deportes</option></select>
+      <textarea id="resumen" rows="2" placeholder="Resumen">${nota?.resumen || ''}</textarea>
+      <textarea id="cuerpo" rows="6" placeholder="Cuerpo">${nota?.cuerpo || ''}</textarea>
+      <input id="autor" placeholder="Autor" value="${nota?.autor || 'Redacción Punto Sur'}">
+      <input id="cargo" placeholder="Cargo" value="${nota?.cargo || ''}">
+      <input id="imgUrl" placeholder="URL imagen principal" value="${nota?.img_url || ''}">
+      <input id="imgSmall" placeholder="URL miniatura" value="${nota?.img_small || ''}">
+      <label><input type="checkbox" id="esPrincipal" ${nota?.es_principal ? 'checked' : ''}> Marcar como principal</label>
+      <button onclick="guardarNota(${isEdit ? nota.id : 'null'})">${isEdit ? 'Actualizar' : 'Publicar'}</button>
+      <button onclick="cancelarForm()" class="secondary">Cancelar</button>
+    `;
+    if(isEdit) document.getElementById('categoria').value = nota.categoria;
+    container.style.display = 'block';
+  }
+
+  async function guardarNota(id) {
+    const data = {
+      titulo: document.getElementById('titulo').value.trim(),
+      resumen: document.getElementById('resumen').value,
+      cuerpo: document.getElementById('cuerpo').value,
+      categoria: document.getElementById('categoria').value,
+      autor: document.getElementById('autor').value || 'Redacción Punto Sur',
+      cargo: document.getElementById('cargo').value,
+      esPrincipal: document.getElementById('esPrincipal').checked,
+      imgUrl: document.getElementById('imgUrl').value,
+      imgSmall: document.getElementById('imgSmall').value
+    };
+    if(!data.titulo) return alert('Título obligatorio');
+    let res;
+    if(id) { data.id = id; res = await fetchAdmin('/api/admin/editar', 'PUT', data); }
+    else { res = await fetchAdmin('/api/admin/publicar', 'POST', data); }
+    if(res.ok) { cancelarForm(); cargarLista(); }
+    else alert('Error: ' + (res.error || 'desconocido'));
+  }
+
+  async function editarNota(id) {
+    const data = await fetch(`${WORKER_URL}/api/noticia?id=${id}`).then(r=>r.json());
+    if(data.articulo) mostrarFormulario(data.articulo);
+  }
+
+  function cancelarForm() { document.getElementById('formContainer').style.display = 'none'; }
+  function logout() { localStorage.removeItem('puntosur_token'); location.reload(); }
+
+  const saved = localStorage.getItem('puntosur_token');
+  if(saved) { token = saved; document.getElementById('loginSection').style.display = 'none'; document.getElementById('adminPanel').style.display = 'block'; cargarLista(); }
 </script>
 </body>
 </html>
