@@ -28,7 +28,7 @@
 <div id="loginSection" class="login-box"><h1>Acceso redacción</h1><label>Token de administrador</label><input type="password" id="tokenInput" placeholder="Ingrese el token"><button onclick="login()">Entrar</button><div id="loginMsg"></div></div>
 <div id="adminPanel" style="display:none;" class="admin-panel"><h1>📝 Publicaciones · PUNTO SUR SURESTE</h1><button onclick="mostrarFormulario()" style="margin-bottom:16px;">+ Nueva nota</button><div id="formContainer" style="display:none; border:1px solid #ddd; padding:16px; margin-bottom:20px; border-radius:8px;"></div><div id="listaNotas"></div><button onclick="logout()" class="secondary" style="margin-top:20px;">Cerrar sesión</button></div>
 <script>
-  const WORKER_URL = "https://puntosur-worker.tu-usuario.workers.dev"; // ← CAMBIE AQUÍ
+  const WORKER_URL = "https://puntosur.vinceremx.workers.dev/"; // ← CAMBIE AQUÍ
   let token=null;
   async function fetchAdmin(path,method,body=null){const opts={method,headers:{'Content-Type':'application/json','X-Admin-Token':token}};if(body)opts.body=JSON.stringify(body);const res=await fetch(`${WORKER_URL}${path}`,opts);return await res.json();}
   async function login(){const t=document.getElementById('tokenInput').value.trim();if(!t)return;token=t;try{const data=await fetchAdmin('/api/admin/lista?limit=1','GET');if(data.ok||data.articulos!==undefined){localStorage.setItem('puntosur_token',token);document.getElementById('loginSection').style.display='none';document.getElementById('adminPanel').style.display='block';cargarLista();}else{document.getElementById('loginMsg').innerHTML='<div class="msg error">Token inválido</div>';token=null;}}catch(e){document.getElementById('loginMsg').innerHTML='<div class="msg error">Error de conexión</div>';}}
