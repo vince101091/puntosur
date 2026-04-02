@@ -2,138 +2,162 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel · PUNTO SUR SURESTE</title>
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:system-ui;background:#f4f4f4;padding:20px}
-    .login-box,.admin-panel{max-width:1200px;margin:40px auto;background:white;padding:24px;border-radius:8px}
-    h1{border-left:6px solid #C62828;padding-left:16px;margin-bottom:20px}
-    input,textarea,select{width:100%;padding:10px;margin:8px 0;border:1px solid #ccc;border-radius:6px}
-    button{background:#C62828;color:white;border:none;padding:10px 20px;border-radius:6px;cursor:pointer}
-    button.secondary{background:#2E2E2E}
-    table{width:100%;border-collapse:collapse;margin-top:20px}
-    th,td{padding:10px;text-align:left;border-bottom:1px solid #ddd}
-    .error{color:#b71c1c;background:#ffebee;padding:10px;margin-top:10px}
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#C62828">
+  <title>Punto Sur Sureste | Noticias del Sureste de México</title>
+  <meta name="description" content="Noticias del Sureste, información al momento. Cobertura regional de Chiapas, Tabasco, Campeche, Yucatán y Quintana Roo.">
+  <meta name="keywords" content="noticias, sureste, chiapas, mexico, regional, actualidad">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Punto Sur Sureste">
+  <meta property="og:description" content="Noticias del Sureste, información al momento">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_MX">
+  
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Montserrat:wght@800&family=Poppins:wght@600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div id="loginSection" class="login-box">
-  <h1>Acceso redacción</h1>
-  <label>Token de administrador</label>
-  <input type="password" id="tokenInput" placeholder="Ingrese token">
-  <button onclick="login()">Entrar</button>
-  <div id="loginMsg"></div>
-</div>
-<div id="adminPanel" style="display:none;" class="admin-panel">
-  <h1>📝 Publicaciones</h1>
-  <button onclick="mostrarFormulario()">+ Nueva nota</button>
-  <div id="formContainer" style="display:none; border:1px solid #ddd; padding:16px; margin:20px 0;"></div>
-  <div id="listaNotas"></div>
-  <button onclick="logout()" class="secondary">Cerrar sesión</button>
-</div>
-<script>
-  const WORKER_URL = "https://puntosur.vinceremx.workers.dev";
-  let token = null;
+  <!-- HEADER -->
+  <header class="header">
+    <!-- Ticker de noticias -->
+    <div class="ticker">
+      <div class="ticker-content">
+        <span class="ticker-item">Bienvenidos a Punto Sur Sureste</span>
+        <span class="ticker-separator">•</span>
+        <span class="ticker-item">Noticias del Sureste, información al momento</span>
+        <span class="ticker-separator">•</span>
+        <span class="ticker-item">Cobertura en Chiapas, Tabasco, Campeche, Yucatán y Quintana Roo</span>
+      </div>
+    </div>
+    
+    <!-- Navegación principal -->
+    <nav class="nav">
+      <div class="nav-container">
+        <a href="index.html" class="logo">
+          <img src="logo.png" alt="Punto Sur Sureste" class="logo-img">
+        </a>
+        
+        <!-- Menú hamburguesa móvil -->
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+          <span class="menu-bar"></span>
+          <span class="menu-bar"></span>
+          <span class="menu-bar"></span>
+        </button>
+        
+        <!-- Menú de navegación -->
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="index.html" class="nav-link active">Inicio</a></li>
+          <li><a href="categoria.html?cat=sureste" class="nav-link">Sureste</a></li>
+          <li><a href="categoria.html?cat=nacional" class="nav-link">Nacional</a></li>
+          <li><a href="categoria.html?cat=seguridad" class="nav-link">Seguridad</a></li>
+          <li><a href="categoria.html?cat=deportes" class="nav-link">Deportes</a></li>
+        </ul>
+      </div>
+    </nav>
+    
+    <!-- Frase editorial -->
+    <div class="tagline">
+      <p>Noticias del Sureste, información al momento</p>
+    </div>
+  </header>
 
-  async function fetchAdmin(path, method, body = null) {
-    const opts = {
-      method,
-      headers: { 'Content-Type': 'application/json', 'X-Admin-Token': token }
-    };
-    if (body) opts.body = JSON.stringify(body);
-    const res = await fetch(`${WORKER_URL}${path}`, opts);
-    return await res.json();
-  }
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main">
+    <!-- Sección de portada -->
+    <section class="portada">
+      <!-- Noticia principal -->
+      <article class="noticia-principal" id="noticiaPrincipal">
+        <a href="#" class="noticia-principal-link">
+          <div class="noticia-principal-imagen">
+            <img src="" alt="" id="imgPrincipal">
+            <span class="noticia-categoria" id="catPrincipal">Cargando...</span>
+          </div>
+          <div class="noticia-principal-contenido">
+            <h1 class="noticia-principal-titulo" id="tituloPrincipal">Cargando noticias...</h1>
+            <p class="noticia-principal-resumen" id="resumenPrincipal">Por favor espere mientras se cargan las noticias más recientes.</p>
+            <div class="noticia-meta">
+              <span class="noticia-autor" id="autorPrincipal">Redacción</span>
+              <span class="noticia-fecha" id="fechaPrincipal">--</span>
+            </div>
+          </div>
+        </a>
+      </article>
 
-  async function login() {
-    const t = document.getElementById('tokenInput').value.trim();
-    if (!t) return;
-    token = t;
-    try {
-      const data = await fetchAdmin('/api/admin/lista?limit=1', 'GET');
-      if (data.ok === true || data.articulos !== undefined) {
-        localStorage.setItem('puntosur_token', token);
-        document.getElementById('loginSection').style.display = 'none';
-        document.getElementById('adminPanel').style.display = 'block';
-        cargarLista();
-      } else {
-        document.getElementById('loginMsg').innerHTML = '<div class="error">Token inválido</div>';
-        token = null;
-      }
-    } catch(e) {
-      document.getElementById('loginMsg').innerHTML = '<div class="error">Error de conexión</div>';
-      token = null;
-    }
-  }
+      <!-- Noticias secundarias -->
+      <div class="noticias-secundarias" id="noticiasSecundarias">
+        <!-- Se llenan con JavaScript -->
+      </div>
+    </section>
 
-  async function cargarLista() {
-    const data = await fetchAdmin('/api/admin/lista?limit=100', 'GET');
-    const arts = data.articulos || [];
-    const html = `<table><thead><tr><th>ID</th><th>Título</th><th>Categoría</th><th>Autor</th><th>Principal</th><th>Fecha</th><th>Acciones</th></tr></thead><tbody>
-      ${arts.map(a => `<tr><td>${a.id}</td><td>${a.titulo.substring(0,60)}</td><td>${a.categoria}</td><td>${a.autor}</td><td>${a.es_principal?'✅':'❌'}</td><td>${new Date(a.timestamp).toLocaleDateString()}</td><td><button onclick="editarNota(${a.id})">Editar</button> <button onclick="eliminarNota(${a.id})">Eliminar</button></td></tr>`).join('')}
-    </tbody></table>`;
-    document.getElementById('listaNotas').innerHTML = html;
-  }
+    <!-- Sección: En tu región -->
+    <section class="seccion">
+      <div class="seccion-header">
+        <h2 class="seccion-titulo">En tu región</h2>
+        <a href="categoria.html?cat=sureste" class="seccion-ver-mas">Ver más</a>
+      </div>
+      <div class="noticias-lista" id="noticiasRegion">
+        <!-- Se llenan con JavaScript -->
+      </div>
+    </section>
 
-  async function eliminarNota(id) {
-    if(!confirm('¿Eliminar?')) return;
-    const res = await fetchAdmin(`/api/admin/eliminar?id=${id}`, 'DELETE');
-    if(res.ok) cargarLista();
-    else alert('Error');
-  }
+    <!-- Sección: Nacional -->
+    <section class="seccion">
+      <div class="seccion-header">
+        <h2 class="seccion-titulo">Nacional</h2>
+        <a href="categoria.html?cat=nacional" class="seccion-ver-mas">Ver más</a>
+      </div>
+      <div class="noticias-lista" id="noticiasNacional">
+        <!-- Se llenan con JavaScript -->
+      </div>
+    </section>
 
-  function mostrarFormulario(nota = null) {
-    const isEdit = !!nota;
-    const container = document.getElementById('formContainer');
-    container.innerHTML = `
-      <h3>${isEdit ? 'Editar' : 'Nueva nota'}</h3>
-      <input id="titulo" placeholder="Título *" value="${nota?.titulo || ''}">
-      <select id="categoria"><option>Sureste</option><option>Nacional</option><option>Seguridad</option><option>Deportes</option></select>
-      <textarea id="resumen" rows="2" placeholder="Resumen">${nota?.resumen || ''}</textarea>
-      <textarea id="cuerpo" rows="6" placeholder="Cuerpo">${nota?.cuerpo || ''}</textarea>
-      <input id="autor" placeholder="Autor" value="${nota?.autor || 'Redacción Punto Sur'}">
-      <input id="cargo" placeholder="Cargo" value="${nota?.cargo || ''}">
-      <input id="imgUrl" placeholder="URL imagen principal" value="${nota?.img_url || ''}">
-      <input id="imgSmall" placeholder="URL miniatura" value="${nota?.img_small || ''}">
-      <label><input type="checkbox" id="esPrincipal" ${nota?.es_principal ? 'checked' : ''}> Marcar como principal</label>
-      <button onclick="guardarNota(${isEdit ? nota.id : 'null'})">${isEdit ? 'Actualizar' : 'Publicar'}</button>
-      <button onclick="cancelarForm()" class="secondary">Cancelar</button>
-    `;
-    if(isEdit) document.getElementById('categoria').value = nota.categoria;
-    container.style.display = 'block';
-  }
+    <!-- Sección: Seguridad -->
+    <section class="seccion">
+      <div class="seccion-header">
+        <h2 class="seccion-titulo">Seguridad</h2>
+        <a href="categoria.html?cat=seguridad" class="seccion-ver-mas">Ver más</a>
+      </div>
+      <div class="noticias-lista" id="noticiasSeguridad">
+        <!-- Se llenan con JavaScript -->
+      </div>
+    </section>
+  </main>
 
-  async function guardarNota(id) {
-    const data = {
-      titulo: document.getElementById('titulo').value.trim(),
-      resumen: document.getElementById('resumen').value,
-      cuerpo: document.getElementById('cuerpo').value,
-      categoria: document.getElementById('categoria').value,
-      autor: document.getElementById('autor').value || 'Redacción Punto Sur',
-      cargo: document.getElementById('cargo').value,
-      esPrincipal: document.getElementById('esPrincipal').checked,
-      imgUrl: document.getElementById('imgUrl').value,
-      imgSmall: document.getElementById('imgSmall').value
-    };
-    if(!data.titulo) return alert('Título obligatorio');
-    let res;
-    if(id) { data.id = id; res = await fetchAdmin('/api/admin/editar', 'PUT', data); }
-    else { res = await fetchAdmin('/api/admin/publicar', 'POST', data); }
-    if(res.ok) { cancelarForm(); cargarLista(); }
-    else alert('Error: ' + (res.error || 'desconocido'));
-  }
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <img src="logo.png" alt="Punto Sur Sureste" class="footer-logo">
+        <p class="footer-tagline">Noticias del Sureste, información al momento</p>
+      </div>
+      
+      <div class="footer-secciones">
+        <h3 class="footer-titulo">Secciones</h3>
+        <ul class="footer-links">
+          <li><a href="categoria.html?cat=sureste">Sureste</a></li>
+          <li><a href="categoria.html?cat=nacional">Nacional</a></li>
+          <li><a href="categoria.html?cat=seguridad">Seguridad</a></li>
+          <li><a href="categoria.html?cat=deportes">Deportes</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-contacto">
+        <h3 class="footer-titulo">Contacto</h3>
+        <p class="footer-texto">Sureste de México</p>
+        <p class="footer-texto">contacto@puntosursureste.com</p>
+      </div>
+    </div>
+    
+    <div class="footer-legal">
+      <p>&copy; 2026 Punto Sur Sureste. Todos los derechos reservados.</p>
+    </div>
+  </footer>
 
-  async function editarNota(id) {
-    const data = await fetch(`${WORKER_URL}/api/noticia?id=${id}`).then(r=>r.json());
-    if(data.articulo) mostrarFormulario(data.articulo);
-  }
-
-  function cancelarForm() { document.getElementById('formContainer').style.display = 'none'; }
-  function logout() { localStorage.removeItem('puntosur_token'); location.reload(); }
-
-  const saved = localStorage.getItem('puntosur_token');
-  if(saved) { token = saved; document.getElementById('loginSection').style.display = 'none'; document.getElementById('adminPanel').style.display = 'block'; cargarLista(); }
-</script>
+  <script src="app.js"></script>
 </body>
 </html>

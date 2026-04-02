@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#C62828">
+  <title>Noticia | Punto Sur Sureste</title>
+  <meta name="description" content="Noticias del Sureste, información al momento.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Montserrat:wght@800&family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Estilos específicos para la página de noticia */
+    .noticia-completa {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .noticia-header {
+      margin-bottom: 24px;
+    }
+    
+    .noticia-categoria-badge {
+      display: inline-block;
+      background-color: var(--rojo-profundo);
+      color: var(--blanco);
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+    
+    .noticia-titulo-grande {
+      font-family: var(--font-titular);
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--gris-carbon);
+      margin-bottom: 16px;
+    }
+    
+    @media (min-width: 768px) {
+      .noticia-titulo-grande {
+        font-size: 36px;
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .noticia-titulo-grande {
+        font-size: 42px;
+      }
+    }
+    
+    .noticia-autor-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      font-size: 14px;
+      color: var(--gris-medio);
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--gris-suave);
+    }
+    
+    .noticia-autor-nombre {
+      font-weight: 600;
+      color: var(--gris-carbon);
+    }
+    
+    .noticia-autor-cargo {
+      font-style: italic;
+    }
+    
+    .noticia-imagen-principal {
+      margin: 24px 0;
+    }
+    
+    .noticia-imagen-principal img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      background-color: var(--gris-suave);
+    }
+    
+    .noticia-cuerpo {
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--gris-carbon);
+    }
+    
+    .noticia-cuerpo p {
+      margin-bottom: 20px;
+    }
+    
+    .noticia-cuerpo p:last-child {
+      margin-bottom: 0;
+    }
+    
+    /* Botón volver */
+    .btn-volver {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--azul-oscuro);
+    }
+    
+    .btn-volver:hover {
+      color: var(--rojo-profundo);
+    }
+    
+    .btn-volver svg {
+      width: 16px;
+      height: 16px;
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <!-- Ticker de noticias -->
+    <div class="ticker">
+      <div class="ticker-content">
+        <span class="ticker-item">Noticias del Sureste, información al momento</span>
+        <span class="ticker-separator">•</span>
+        <span class="ticker-item">Cobertura en Chiapas, Tabasco, Campeche, Yucatán y Quintana Roo</span>
+      </div>
+    </div>
+    
+    <!-- Navegación principal -->
+    <nav class="nav">
+      <div class="nav-container">
+        <a href="index.html" class="logo">
+          <img src="logo.png" alt="Punto Sur Sureste" class="logo-img">
+        </a>
+        
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+          <span class="menu-bar"></span>
+          <span class="menu-bar"></span>
+          <span class="menu-bar"></span>
+        </button>
+        
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="index.html" class="nav-link">Inicio</a></li>
+          <li><a href="categoria.html?cat=sureste" class="nav-link">Sureste</a></li>
+          <li><a href="categoria.html?cat=nacional" class="nav-link">Nacional</a></li>
+          <li><a href="categoria.html?cat=seguridad" class="nav-link">Seguridad</a></li>
+          <li><a href="categoria.html?cat=deportes" class="nav-link">Deportes</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main">
+    <!-- Botón volver -->
+    <a href="index.html" class="btn-volver">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      Volver al inicio
+    </a>
+    
+    <!-- Contenido de la noticia -->
+    <div id="contenidoNoticia">
+      <div class="loading">Cargando noticia...</div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <img src="logo.png" alt="Punto Sur Sureste" class="footer-logo">
+        <p class="footer-tagline">Noticias del Sureste, información al momento</p>
+      </div>
+      
+      <div class="footer-secciones">
+        <h3 class="footer-titulo">Secciones</h3>
+        <ul class="footer-links">
+          <li><a href="categoria.html?cat=sureste">Sureste</a></li>
+          <li><a href="categoria.html?cat=nacional">Nacional</a></li>
+          <li><a href="categoria.html?cat=seguridad">Seguridad</a></li>
+          <li><a href="categoria.html?cat=deportes">Deportes</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-contacto">
+        <h3 class="footer-titulo">Contacto</h3>
+        <p class="footer-texto">Sureste de México</p>
+        <p class="footer-texto">contacto@puntosursureste.com</p>
+      </div>
+    </div>
+    
+    <div class="footer-legal">
+      <p>&copy; 2026 Punto Sur Sureste. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
