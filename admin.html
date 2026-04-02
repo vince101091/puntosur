@@ -18,20 +18,20 @@
       --gris-fondo: #F5F5F5;
       --verde: #2E7D32;
     }
-    
+   
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-    
+   
     body {
       font-family: 'Inter', system-ui, sans-serif;
       background-color: var(--gris-fondo);
       color: var(--gris-carbon);
       line-height: 1.5;
     }
-    
+   
     /* Header Admin */
     .admin-header {
       background-color: var(--azul);
@@ -44,13 +44,13 @@
       top: 0;
       z-index: 100;
     }
-    
+   
     .admin-titulo {
       font-family: 'Poppins', sans-serif;
       font-size: 18px;
       font-weight: 600;
     }
-    
+   
     .btn-salir {
       background-color: var(--rojo);
       color: var(--blanco);
@@ -61,14 +61,14 @@
       cursor: pointer;
       border-radius: 4px;
     }
-    
+   
     /* Contenedor principal */
     .admin-container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 24px 20px;
     }
-    
+   
     /* Login */
     .login-container {
       max-width: 400px;
@@ -78,7 +78,7 @@
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-    
+   
     .login-titulo {
       font-family: 'Poppins', sans-serif;
       font-size: 24px;
@@ -86,19 +86,19 @@
       text-align: center;
       color: var(--azul);
     }
-    
+   
     /* Formularios */
     .form-group {
       margin-bottom: 20px;
     }
-    
+   
     .form-label {
       display: block;
       font-weight: 500;
       margin-bottom: 6px;
       font-size: 14px;
     }
-    
+   
     .form-input,
     .form-select,
     .form-textarea {
@@ -109,30 +109,30 @@
       font-size: 16px;
       font-family: inherit;
     }
-    
+   
     .form-input:focus,
     .form-select:focus,
     .form-textarea:focus {
       outline: none;
       border-color: var(--azul);
     }
-    
+   
     .form-textarea {
       min-height: 150px;
       resize: vertical;
     }
-    
+   
     .form-checkbox {
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    
+   
     .form-checkbox input {
       width: 18px;
       height: 18px;
     }
-    
+   
     /* Botones */
     .btn {
       padding: 12px 24px;
@@ -143,35 +143,35 @@
       cursor: pointer;
       transition: opacity 0.2s;
     }
-    
+   
     .btn:hover {
       opacity: 0.9;
     }
-    
+   
     .btn-primary {
       background-color: var(--rojo);
       color: var(--blanco);
     }
-    
+   
     .btn-secondary {
       background-color: var(--azul);
       color: var(--blanco);
     }
-    
+   
     .btn-success {
       background-color: var(--verde);
       color: var(--blanco);
     }
-    
+   
     .btn-block {
       width: 100%;
     }
-    
+   
     .btn-sm {
       padding: 8px 16px;
       font-size: 14px;
     }
-    
+   
     /* Tabs de navegación */
     .admin-tabs {
       display: flex;
@@ -179,7 +179,7 @@
       margin-bottom: 24px;
       border-bottom: 2px solid var(--gris-suave);
     }
-    
+   
     .admin-tab {
       padding: 12px 24px;
       background: none;
@@ -191,12 +191,12 @@
       border-bottom: 2px solid transparent;
       margin-bottom: -2px;
     }
-    
+   
     .admin-tab.active {
       color: var(--rojo);
       border-bottom-color: var(--rojo);
     }
-    
+   
     /* Paneles */
     .panel {
       display: none;
@@ -205,53 +205,53 @@
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
-    
+   
     .panel.active {
       display: block;
     }
-    
+   
     .panel-titulo {
       font-family: 'Poppins', sans-serif;
       font-size: 20px;
       margin-bottom: 20px;
       color: var(--azul);
     }
-    
+   
     /* Tabla de publicaciones */
     .tabla-container {
       overflow-x: auto;
     }
-    
+   
     .tabla {
       width: 100%;
       border-collapse: collapse;
       font-size: 14px;
     }
-    
+   
     .tabla th,
     .tabla td {
       padding: 12px;
       text-align: left;
       border-bottom: 1px solid var(--gris-suave);
     }
-    
+   
     .tabla th {
       background-color: var(--gris-fondo);
       font-weight: 600;
       white-space: nowrap;
     }
-    
+   
     .tabla tr:hover {
       background-color: var(--gris-fondo);
     }
-    
+   
     .tabla-titulo {
       max-width: 250px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    
+   
     .badge {
       display: inline-block;
       padding: 4px 8px;
@@ -259,22 +259,22 @@
       font-size: 12px;
       font-weight: 600;
     }
-    
+   
     .badge-si {
       background-color: #E8F5E9;
       color: var(--verde);
     }
-    
+   
     .badge-no {
       background-color: var(--gris-suave);
       color: #666;
     }
-    
+   
     .acciones {
       display: flex;
       gap: 8px;
     }
-    
+   
     .btn-editar {
       background-color: var(--azul);
       color: var(--blanco);
@@ -284,7 +284,7 @@
       border-radius: 4px;
       cursor: pointer;
     }
-    
+   
     .btn-eliminar {
       background-color: var(--rojo);
       color: var(--blanco);
@@ -294,7 +294,7 @@
       border-radius: 4px;
       cursor: pointer;
     }
-    
+   
     /* Mensajes */
     .mensaje {
       padding: 12px 16px;
@@ -302,34 +302,34 @@
       margin-bottom: 20px;
       font-weight: 500;
     }
-    
+   
     .mensaje-exito {
       background-color: #E8F5E9;
       color: var(--verde);
     }
-    
+   
     .mensaje-error {
       background-color: #FFEBEE;
       color: var(--rojo);
     }
-    
+   
     /* Grid de formulario */
     .form-grid {
       display: grid;
       gap: 20px;
     }
-    
+   
     @media (min-width: 768px) {
       .form-grid-2 {
         grid-template-columns: 1fr 1fr;
       }
     }
-    
+   
     /* Oculto */
     .hidden {
       display: none !important;
     }
-    
+   
     /* Estado vacío */
     .empty-state {
       text-align: center;
@@ -401,22 +401,22 @@
         <h2 class="panel-titulo" id="formTitulo">Nueva Publicación</h2>
         <form id="formPublicacion">
           <input type="hidden" id="publicacionId">
-          
+         
           <div class="form-group">
             <label class="form-label" for="titulo">Título *</label>
             <input type="text" id="titulo" class="form-input" placeholder="Escribe el titular de la noticia" required>
           </div>
-          
+         
           <div class="form-group">
             <label class="form-label" for="resumen">Resumen</label>
             <textarea id="resumen" class="form-textarea" placeholder="Resumen corto de la noticia (opcional)" rows="3"></textarea>
           </div>
-          
+         
           <div class="form-group">
             <label class="form-label" for="cuerpo">Cuerpo de la noticia</label>
             <textarea id="cuerpo" class="form-textarea" placeholder="Escribe el contenido completo de la noticia" rows="8"></textarea>
           </div>
-          
+         
           <div class="form-grid form-grid-2">
             <div class="form-group">
               <label class="form-label" for="categoria">Categoría *</label>
@@ -428,37 +428,37 @@
                 <option value="deportes">Deportes</option>
               </select>
             </div>
-            
+           
             <div class="form-group">
               <label class="form-label" for="autor">Autor</label>
               <input type="text" id="autor" class="form-input" placeholder="Nombre del autor" value="Redacción Punto Sur Sureste">
             </div>
           </div>
-          
+         
           <div class="form-grid form-grid-2">
             <div class="form-group">
               <label class="form-label" for="cargo">Cargo (opcional)</label>
               <input type="text" id="cargo" class="form-input" placeholder="Ej: Corresponsal">
             </div>
-            
+           
             <div class="form-group">
               <label class="form-label" for="imgUrl">URL de imagen principal</label>
               <input type="url" id="imgUrl" class="form-input" placeholder="https://...">
             </div>
           </div>
-          
+         
           <div class="form-group">
             <label class="form-label" for="imgSmall">URL de miniatura (opcional)</label>
             <input type="url" id="imgSmall" class="form-input" placeholder="https://...">
           </div>
-          
+         
           <div class="form-group">
             <label class="form-checkbox">
               <input type="checkbox" id="esPrincipal">
               <span>Marcar como noticia principal</span>
             </label>
           </div>
-          
+         
           <div style="display: flex; gap: 12px; margin-top: 24px;">
             <button type="submit" class="btn btn-success" id="btnGuardar">Publicar</button>
             <button type="button" class="btn btn-secondary" id="btnCancelar">Cancelar</button>
@@ -473,13 +473,13 @@
     // CONFIGURACIÓN - CAMBIAR POR TU URL DEL WORKER
     // =====================================================
     const API_URL = 'https://puntosur.vinceremx.workers.dev';
-    
+   
     // =====================================================
     // ESTADO
     // =====================================================
     let token = localStorage.getItem('admin_token') || '';
     let modoEdicion = false;
-    
+   
     // =====================================================
     // ELEMENTOS DOM
     // =====================================================
@@ -498,7 +498,7 @@
     const btnGuardar = document.getElementById('btnGuardar');
     const btnCancelar = document.getElementById('btnCancelar');
     const mensajeGlobal = document.getElementById('mensajeGlobal');
-    
+   
     // =====================================================
     // FUNCIONES DE AUTENTICACIÓN
     // =====================================================
@@ -510,23 +510,23 @@
         mostrarLogin();
       }
     }
-    
+   
     function mostrarLogin() {
       loginScreen.classList.remove('hidden');
       adminPanel.classList.add('hidden');
     }
-    
+   
     function mostrarPanel() {
       loginScreen.classList.add('hidden');
       adminPanel.classList.remove('hidden');
     }
-    
+   
     function cerrarSesion() {
       localStorage.removeItem('admin_token');
       token = '';
       mostrarLogin();
     }
-    
+   
     // =====================================================
     // FUNCIONES DE API
     // =====================================================
@@ -535,7 +535,7 @@
         const response = await fetch(`${API_URL}/api/admin/lista?limit=100`, {
           headers: { 'X-Admin-Token': token }
         });
-        
+       
         if (!response.ok) {
           if (response.status === 401) {
             cerrarSesion();
@@ -543,7 +543,7 @@
           }
           throw new Error('Error al cargar publicaciones');
         }
-        
+       
         const data = await response.json();
         renderizarTabla(data.articulos || data || []);
       } catch (error) {
@@ -551,14 +551,14 @@
         tablaBody.innerHTML = '<tr><td colspan="7" class="empty-state">Error al cargar publicaciones</td></tr>';
       }
     }
-    
+   
     async function guardarPublicacion(datos) {
-      const url = modoEdicion 
+      const url = modoEdicion
         ? `${API_URL}/api/admin/editar`
         : `${API_URL}/api/admin/publicar`;
-      
+     
       const method = modoEdicion ? 'PUT' : 'POST';
-      
+     
       try {
         const response = await fetch(url, {
           method,
@@ -568,32 +568,32 @@
           },
           body: JSON.stringify(datos)
         });
-        
+       
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(errorData.error || 'Error al guardar');
         }
-        
+       
         return await response.json();
       } catch (error) {
         throw error;
       }
     }
-    
+   
     async function eliminarPublicacion(id) {
       try {
         const response = await fetch(`${API_URL}/api/admin/eliminar?id=${id}`, {
           method: 'DELETE',
           headers: { 'X-Admin-Token': token }
         });
-        
+       
         if (!response.ok) throw new Error('Error al eliminar');
         return true;
       } catch (error) {
         throw error;
       }
     }
-    
+   
     // =====================================================
     // FUNCIONES DE RENDERIZADO
     // =====================================================
@@ -602,39 +602,42 @@
         tablaBody.innerHTML = '<tr><td colspan="7" class="empty-state">No hay publicaciones</td></tr>';
         return;
       }
-      
-      tablaBody.innerHTML = publicaciones.map(pub => `
+     
+      tablaBody.innerHTML = publicaciones.map(pub => {
+        const esPrincipal = pub.es_principal == 1 || pub.esprincipal;
+        return `
         <tr>
           <td>${pub.id}</td>
           <td class="tabla-titulo">${pub.titulo || 'Sin título'}</td>
           <td>${pub.categoria || '-'}</td>
           <td>${pub.autor || 'Redacción'}</td>
-          <td><span class="badge ${pub.esprincipal ? 'badge-si' : 'badge-no'}">${pub.esprincipal ? 'Sí' : 'No'}</span></td>
+          <td><span class="badge ${esPrincipal ? 'badge-si' : 'badge-no'}">${esPrincipal ? 'Sí' : 'No'}</span></td>
           <td>${formatearFecha(pub.timestamp)}</td>
           <td class="acciones">
             <button class="btn-editar" onclick="editarPublicacion(${pub.id})">Editar</button>
             <button class="btn-eliminar" onclick="confirmarEliminar(${pub.id})">Eliminar</button>
           </td>
         </tr>
-      `).join('');
+      `;
+      }).join('');
     }
-    
+   
     function formatearFecha(timestamp) {
       if (!timestamp) return '-';
       const fecha = new Date(timestamp);
       return fecha.toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
     }
-    
+   
     function mostrarMensaje(texto, tipo = 'exito') {
       mensajeGlobal.textContent = texto;
       mensajeGlobal.className = `mensaje mensaje-${tipo}`;
       mensajeGlobal.classList.remove('hidden');
-      
+     
       setTimeout(() => {
         mensajeGlobal.classList.add('hidden');
       }, 4000);
     }
-    
+   
     // =====================================================
     // FUNCIONES DE FORMULARIO
     // =====================================================
@@ -646,7 +649,7 @@
       formTitulo.textContent = 'Nueva Publicación';
       btnGuardar.textContent = 'Publicar';
     }
-    
+   
     function cargarFormulario(pub) {
       document.getElementById('publicacionId').value = pub.id;
       document.getElementById('titulo').value = pub.titulo || '';
@@ -655,15 +658,16 @@
       document.getElementById('categoria').value = pub.categoria || '';
       document.getElementById('autor').value = pub.autor || 'Redacción Punto Sur Sureste';
       document.getElementById('cargo').value = pub.cargo || '';
-      document.getElementById('imgUrl').value = pub.imgurl || '';
+      document.getElementById('imgUrl').value = pub.img_url || pub.imgurl || '';
       document.getElementById('imgSmall').value = pub.img_small || '';
-      document.getElementById('esPrincipal').checked = pub.esprincipal || false;
-      
+      // El worker usa es_principal (snake_case)
+      document.getElementById('esPrincipal').checked = pub.es_principal == 1 || pub.esprincipal || false;
+     
       modoEdicion = true;
       formTitulo.textContent = 'Editar Publicación';
       btnGuardar.textContent = 'Guardar cambios';
     }
-    
+   
     // =====================================================
     // ACCIONES
     // =====================================================
@@ -671,10 +675,12 @@
       try {
         const response = await fetch(`${API_URL}/api/noticia?id=${id}`);
         if (!response.ok) throw new Error('No se pudo cargar la publicación');
-        
-        const pub = await response.json();
+       
+        const data = await response.json();
+        const pub = data.articulo || data;
+        if (!pub) throw new Error('Publicación no encontrada');
         cargarFormulario(pub);
-        
+       
         // Cambiar a tab de crear/editar
         tabs.forEach(t => t.classList.remove('active'));
         document.querySelector('[data-tab="crear"]').classList.add('active');
@@ -684,12 +690,12 @@
         mostrarMensaje('Error al cargar la publicación', 'error');
       }
     };
-    
+   
     window.confirmarEliminar = async function(id) {
       if (!confirm('¿Seguro que quieres eliminar esta publicación? Esta acción no se puede deshacer.')) {
         return;
       }
-      
+     
       try {
         await eliminarPublicacion(id);
         mostrarMensaje('Publicación eliminada correctamente');
@@ -698,22 +704,22 @@
         mostrarMensaje('Error al eliminar la publicación', 'error');
       }
     };
-    
+   
     // =====================================================
     // EVENT LISTENERS
     // =====================================================
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
+     
       const inputToken = tokenInput.value.trim();
       if (!inputToken) return;
-      
+     
       // Verificar token haciendo una petición de prueba
       try {
         const response = await fetch(`${API_URL}/api/admin/lista?limit=1`, {
           headers: { 'X-Admin-Token': inputToken }
         });
-        
+       
         if (response.ok) {
           token = inputToken;
           localStorage.setItem('admin_token', token);
@@ -729,31 +735,31 @@
         loginError.classList.remove('hidden');
       }
     });
-    
+   
     btnSalir.addEventListener('click', cerrarSesion);
-    
+   
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-        
+       
         const tabName = tab.dataset.tab;
         panelLista.classList.toggle('active', tabName === 'lista');
         panelCrear.classList.toggle('active', tabName === 'crear');
-        
+       
         if (tabName === 'crear' && !modoEdicion) {
           limpiarFormulario();
         }
-        
+       
         if (tabName === 'lista') {
           cargarPublicaciones();
         }
       });
     });
-    
+   
     formPublicacion.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
+     
       const datos = {
         titulo: document.getElementById('titulo').value.trim(),
         resumen: document.getElementById('resumen').value.trim(),
@@ -765,20 +771,30 @@
         imgSmall: document.getElementById('imgSmall').value.trim(),
         esPrincipal: document.getElementById('esPrincipal').checked
       };
-      
+     
       if (modoEdicion) {
         datos.id = parseInt(document.getElementById('publicacionId').value);
       }
-      
+     
+      // Validar campos requeridos
+      if (!datos.titulo) {
+        mostrarMensaje('El título es obligatorio', 'error');
+        return;
+      }
+      if (!datos.categoria) {
+        mostrarMensaje('La categoría es obligatoria', 'error');
+        return;
+      }
+     
       try {
         btnGuardar.disabled = true;
         btnGuardar.textContent = 'Guardando...';
-        
+       
         await guardarPublicacion(datos);
-        
+       
         mostrarMensaje(modoEdicion ? 'Publicación actualizada' : 'Publicación creada');
         limpiarFormulario();
-        
+       
         // Volver a lista
         tabs.forEach(t => t.classList.remove('active'));
         document.querySelector('[data-tab="lista"]').classList.add('active');
@@ -786,13 +802,14 @@
         panelLista.classList.add('active');
         cargarPublicaciones();
       } catch (error) {
+        console.error('Error:', error);
         mostrarMensaje(error.message || 'Error al guardar', 'error');
       } finally {
         btnGuardar.disabled = false;
         btnGuardar.textContent = modoEdicion ? 'Guardar cambios' : 'Publicar';
       }
     });
-    
+   
     btnCancelar.addEventListener('click', () => {
       limpiarFormulario();
       tabs.forEach(t => t.classList.remove('active'));
@@ -800,7 +817,7 @@
       panelCrear.classList.remove('active');
       panelLista.classList.add('active');
     });
-    
+   
     // =====================================================
     // INICIALIZACIÓN
     // =====================================================
