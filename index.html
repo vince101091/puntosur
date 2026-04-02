@@ -66,7 +66,7 @@
 <main class="container" id="main-content"><div class="loader">Cargando...</div></main>
 <footer><div class="footer-inner"><div><div class="footer-logo">PUNTO <span class="rojo">SUR</span> SURESTE</div><p style="margin-top:8px;">Periodismo independiente desde Chiapas para todo el sureste.</p></div><div class="footer-links"><strong>Secciones</strong><a href="#" data-cat="Sureste">Sureste</a><a href="#" data-cat="Nacional">Nacional</a><a href="#" data-cat="Seguridad">Seguridad</a><a href="#" data-cat="Deportes">Deportes</a></div><div class="footer-links"><strong>Contacto</strong><a href="mailto:redaccion@puntosursureste.mx">redaccion@puntosursureste.mx</a><a href="#">Aviso de privacidad</a></div></div><div class="copy">© 2026 PUNTO SUR SURESTE · Hecho en Chiapas, México</div></footer>
 <script>
-  const WORKER_URL = "https://puntosur-worker.tu-usuario.workers.dev"; // ← CAMBIE AQUÍ
+  const WORKER_URL = "https://puntosur.vinceremx.workers.dev/"; // ← CAMBIE AQUÍ
   let currentView="portada", currentCategory=null;
   function getCDMXDate(){const now=new Date();return new Date(now.getTime()+now.getTimezoneOffset()*60000-6*3600000);}
   function formatDate(d){return d.toLocaleDateString('es-MX',{weekday:'short',day:'numeric',month:'short',year:'numeric'}).replace(/\./g,'');}
