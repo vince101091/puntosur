@@ -174,11 +174,17 @@
       font-weight: 500;
     }
     
+    .form-hint {
+      font-size: 12px;
+      color: var(--gris-500);
+      margin-top: 6px;
+    }
+    
     /* Subir imagen desde dispositivo */
     .upload-area {
       border: 2px dashed var(--gris-300);
       border-radius: 8px;
-      padding: 24px;
+      padding: 32px 24px;
       text-align: center;
       cursor: pointer;
       transition: all 0.2s;
@@ -221,11 +227,34 @@
       display: none;
     }
     
+    .preview-container {
+      margin-top: 16px;
+      position: relative;
+    }
+    
     .preview-img {
       max-width: 100%;
-      max-height: 200px;
+      max-height: 250px;
       border-radius: 8px;
-      margin-top: 12px;
+      border: 2px solid var(--gris-300);
+    }
+    
+    .preview-remove {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: var(--rojo);
+      color: white;
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     
     .btn {
@@ -344,6 +373,14 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       font-weight: 500;
+    }
+    
+    .tabla-img {
+      width: 50px;
+      height: 35px;
+      object-fit: cover;
+      border-radius: 4px;
+      background: var(--gris-100);
     }
     
     .badge {
@@ -493,6 +530,22 @@
     .img-panel.active {
       display: block;
     }
+    
+    .upload-progress {
+      width: 100%;
+      height: 4px;
+      background: var(--gris-300);
+      border-radius: 2px;
+      margin-top: 12px;
+      overflow: hidden;
+    }
+    
+    .upload-progress-bar {
+      height: 100%;
+      background: var(--verde);
+      border-radius: 2px;
+      transition: width 0.3s;
+    }
   </style>
 </head>
 <body>
@@ -511,6 +564,9 @@
         <button type="submit" class="btn btn-primary btn-block">Entrar al panel</button>
         <div id="loginError" class="mensaje mensaje-error hidden" style="margin-top: 16px;"></div>
       </form>
+      <p style="text-align: center; margin-top: 20px; font-size: 13px; color: var(--gris-500);">
+        Contacto: <a href="mailto:suresteclaro@gmail.com" style="color: var(--azul);">suresteclaro@gmail.com</a>
+      </p>
     </div>
   </div>
 
@@ -535,9 +591,9 @@
             <thead>
               <tr>
                 <th>ID</th>
+                <th>Img</th>
                 <th>Titulo</th>
                 <th>Categoria</th>
-                <th>Autor</th>
                 <th>Principal</th>
                 <th>Fecha</th>
                 <th>Acciones</th>
@@ -554,6 +610,7 @@
         <h2 class="panel-titulo" id="formTitulo">Nueva Publicacion</h2>
         <form id="formPublicacion">
           <input type="hidden" id="publicacionId">
+          <input type="hidden" id="imgUrlFinal">
           
           <div class="form-section">
             <div class="form-section-title">Informacion basica</div>
@@ -617,22 +674,33 @@
                   <line x1="12" y1="3" x2="12" y2="15"/>
                 </svg>
                 <p class="upload-text"><strong>Haz clic para subir</strong> o arrastra una imagen</p>
-                <p class="upload-hint">PNG, JPG o WEBP (max 5MB)</p>
-                <input type="file" id="imgFile" class="upload-input" accept="image/*">
+                <p class="upload-hint">JPG, PNG, GIF, WEBP, BMP, SVG (max 10MB)</p>
+                <input type="file" id="imgFile" class="upload-input" accept="image/jpeg,image/png,image/gif,image/webp,image/bmp,image/svg+xml,image/*">
               </div>
-              <img id="previewUpload" class="preview-img hidden" alt="Vista previa">
+              <div id="previewContainerUpload" class="preview-container hidden">
+                <img id="previewUpload" class="preview-img" alt="Vista previa">
+                <button type="button" class="preview-remove" id="removeUpload" title="Quitar imagen">&times;</button>
+              </div>
               <p id="uploadStatus" class="upload-hint" style="margin-top: 8px;"></p>
             </div>
             
             <div id="imgPanelUrl" class="img-panel">
               <div class="form-group">
-                <label class="form-label" for="imgUrl">URL de la imagen principal</label>
+                <label class="form-label" for="imgUrl">URL de la imagen</label>
                 <input type="url" id="imgUrl" class="form-input" placeholder="https://ejemplo.com/imagen.jpg">
+                <p class="form-hint">Pega la URL directa de una imagen de internet</p>
               </div>
-              <img id="previewUrl" class="preview-img hidden" alt="Vista previa">
+              <div id="previewContainerUrl" class="preview-container hidden">
+                <img id="previewUrl" class="preview-img" alt="Vista previa">
+                <button type="button" class="preview-remove" id="removeUrl" title="Quitar imagen">&times;</button>
+              </div>
             </div>
             
-            <input type="hidden" id="imgUrlFinal">
+            <div class="form-group" style="margin-top: 16px;">
+              <label class="form-label" for="imgCreditos">Creditos / Fuente de la imagen</label>
+              <input type="text" id="imgCreditos" class="form-input" placeholder="Ej: Foto: Juan Perez / Agencia EFE">
+              <p class="form-hint">Importante: Incluir creditos para evitar problemas legales</p>
+            </div>
           </div>
           
           <div class="form-group">
@@ -663,7 +731,7 @@
     
     let token = localStorage.getItem('admin_token') || '';
     let modoEdicion = false;
-    let uploadedImageUrl = '';
+    let currentImageData = '';
     
     // Elementos DOM
     const loginScreen = document.getElementById('loginScreen');
@@ -689,10 +757,14 @@
     const uploadArea = document.getElementById('uploadArea');
     const imgFile = document.getElementById('imgFile');
     const previewUpload = document.getElementById('previewUpload');
+    const previewContainerUpload = document.getElementById('previewContainerUpload');
     const previewUrl = document.getElementById('previewUrl');
+    const previewContainerUrl = document.getElementById('previewContainerUrl');
     const imgUrlInput = document.getElementById('imgUrl');
     const imgUrlFinal = document.getElementById('imgUrlFinal');
     const uploadStatus = document.getElementById('uploadStatus');
+    const removeUpload = document.getElementById('removeUpload');
+    const removeUrl = document.getElementById('removeUrl');
     
     // =====================================================
     // TABS DE IMAGEN
@@ -710,106 +782,132 @@
     });
     
     // =====================================================
-    // SUBIR IMAGEN DESDE DISPOSITIVO
+    // SUBIR IMAGEN DESDE DISPOSITIVO - CORREGIDO
     // =====================================================
     
     uploadArea.addEventListener('click', () => imgFile.click());
     
     uploadArea.addEventListener('dragover', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       uploadArea.classList.add('dragover');
     });
     
-    uploadArea.addEventListener('dragleave', () => {
+    uploadArea.addEventListener('dragleave', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       uploadArea.classList.remove('dragover');
     });
     
     uploadArea.addEventListener('drop', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       uploadArea.classList.remove('dragover');
-      const file = e.dataTransfer.files[0];
-      if (file && file.type.startsWith('image/')) {
-        handleImageUpload(file);
+      
+      const files = e.dataTransfer.files;
+      if (files && files.length > 0) {
+        handleImageFile(files[0]);
       }
     });
     
     imgFile.addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (file) {
-        handleImageUpload(file);
+        handleImageFile(file);
       }
     });
     
-    async function handleImageUpload(file) {
-      // Validar tamaño (5MB max)
-      if (file.size > 5 * 1024 * 1024) {
-        uploadStatus.textContent = 'Error: La imagen es muy grande (max 5MB)';
+    function handleImageFile(file) {
+      console.log('Archivo recibido:', file.name, file.type, file.size);
+      
+      // Validar que sea imagen
+      if (!file.type.startsWith('image/')) {
+        uploadStatus.textContent = 'Error: El archivo no es una imagen valida';
         uploadStatus.style.color = 'var(--rojo)';
         return;
       }
       
-      // Mostrar preview local mientras sube
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        previewUpload.src = e.target.result;
-        previewUpload.classList.remove('hidden');
-      };
-      reader.readAsDataURL(file);
+      // Validar tamano (10MB max)
+      if (file.size > 10 * 1024 * 1024) {
+        uploadStatus.textContent = 'Error: La imagen es muy grande (max 10MB)';
+        uploadStatus.style.color = 'var(--rojo)';
+        return;
+      }
       
-      uploadStatus.textContent = 'Subiendo imagen...';
+      uploadStatus.textContent = 'Procesando imagen...';
       uploadStatus.style.color = 'var(--gris-500)';
       
-      try {
-        // Crear FormData para subir
-        const formData = new FormData();
-        formData.append('file', file);
+      // Leer como base64
+      const reader = new FileReader();
+      
+      reader.onload = (e) => {
+        const base64Data = e.target.result;
         
-        // Subir al worker
-        const response = await fetch(`${API_URL}/api/admin/upload`, {
-          method: 'POST',
-          headers: {
-            'X-Admin-Token': token
-          },
-          body: formData
-        });
+        // Mostrar preview
+        previewUpload.src = base64Data;
+        previewContainerUpload.classList.remove('hidden');
+        uploadArea.style.display = 'none';
         
-        if (!response.ok) {
-          throw new Error('Error al subir imagen');
-        }
+        // Guardar la imagen como data URL
+        currentImageData = base64Data;
+        imgUrlFinal.value = base64Data;
         
-        const data = await response.json();
-        uploadedImageUrl = data.url;
-        imgUrlFinal.value = data.url;
-        
-        uploadStatus.textContent = 'Imagen subida correctamente';
+        uploadStatus.textContent = 'Imagen cargada correctamente';
         uploadStatus.style.color = 'var(--verde)';
         
-      } catch (error) {
-        console.error('Error subiendo imagen:', error);
-        uploadStatus.textContent = 'Error al subir. Intenta con URL en su lugar.';
+        console.log('Imagen procesada, longitud:', base64Data.length);
+      };
+      
+      reader.onerror = (error) => {
+        console.error('Error leyendo archivo:', error);
+        uploadStatus.textContent = 'Error al procesar la imagen';
         uploadStatus.style.color = 'var(--rojo)';
-        
-        // Usar la imagen como data URL como fallback
-        uploadedImageUrl = previewUpload.src;
-        imgUrlFinal.value = previewUpload.src;
-      }
+      };
+      
+      reader.readAsDataURL(file);
     }
     
-    // Preview de URL manual
+    // Quitar imagen subida
+    removeUpload.addEventListener('click', () => {
+      previewContainerUpload.classList.add('hidden');
+      uploadArea.style.display = '';
+      currentImageData = '';
+      imgUrlFinal.value = '';
+      imgFile.value = '';
+      uploadStatus.textContent = '';
+    });
+    
+    // =====================================================
+    // URL DE IMAGEN
+    // =====================================================
+    
     imgUrlInput.addEventListener('input', () => {
       const url = imgUrlInput.value.trim();
       if (url) {
         previewUrl.src = url;
-        previewUrl.classList.remove('hidden');
+        previewContainerUrl.classList.remove('hidden');
         imgUrlFinal.value = url;
-        uploadedImageUrl = '';
+        currentImageData = '';
       } else {
-        previewUrl.classList.add('hidden');
+        previewContainerUrl.classList.add('hidden');
+        imgUrlFinal.value = '';
       }
     });
     
     previewUrl.addEventListener('error', () => {
-      previewUrl.classList.add('hidden');
+      // Si la URL no carga, no ocultar el preview pero mostrar error
+      previewUrl.style.opacity = '0.5';
+    });
+    
+    previewUrl.addEventListener('load', () => {
+      previewUrl.style.opacity = '1';
+    });
+    
+    // Quitar URL
+    removeUrl.addEventListener('click', () => {
+      previewContainerUrl.classList.add('hidden');
+      imgUrlInput.value = '';
+      imgUrlFinal.value = '';
     });
     
     // =====================================================
@@ -863,6 +961,8 @@
     async function guardarPublicacion(datos) {
       const url = modoEdicion ? `${API_URL}/api/admin/editar` : `${API_URL}/api/admin/publicar`;
       
+      console.log('Guardando publicacion:', url, datos);
+      
       const response = await fetch(url, {
         method: modoEdicion ? 'PUT' : 'POST',
         headers: { 
@@ -873,7 +973,7 @@
       });
       
       if (!response.ok) {
-        const err = await response.json();
+        const err = await response.json().catch(() => ({}));
         throw new Error(err.error || 'Error al guardar');
       }
       
@@ -887,6 +987,20 @@
       });
       if (!response.ok) throw new Error('Error');
       return true;
+    }
+    
+    function getPlaceholderImg() {
+      return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 70"%3E%3Crect fill="%23e2e8f0" width="100" height="70"/%3E%3Ctext fill="%2364748b" font-family="sans-serif" font-size="8" x="50%25" y="50%25" text-anchor="middle" dy=".3em"%3ESin img%3C/text%3E%3C/svg%3E';
+    }
+    
+    function getImagenTabla(pub) {
+      const url = pub.img_url || pub.imgurl || pub.imgUrl || pub.imagen || '';
+      if (!url || url === 'null' || url === 'undefined') return getPlaceholderImg();
+      // Si es base64 muy largo, mostrar placeholder
+      if (url.startsWith('data:') && url.length > 100) {
+        return url; // Mostrar la imagen base64
+      }
+      return url;
     }
     
     function getBadgeClass(categoria) {
@@ -922,12 +1036,13 @@
       tablaBody.innerHTML = publicaciones.map(pub => {
         const esPrincipal = pub.es_principal == 1 || pub.esprincipal || pub.esPrincipal;
         const cat = pub.categoria || 'general';
+        const imgSrc = getImagenTabla(pub);
         return `
         <tr>
           <td><strong>${pub.id}</strong></td>
+          <td><img src="${imgSrc}" class="tabla-img" alt="" onerror="this.src='${getPlaceholderImg()}'"></td>
           <td class="tabla-titulo">${pub.titulo || 'Sin titulo'}</td>
           <td><span class="badge badge-cat ${getBadgeClass(cat)}">${cat}</span></td>
-          <td>${pub.autor || 'Redaccion'}</td>
           <td><span class="badge ${esPrincipal ? 'badge-si' : 'badge-no'}">${esPrincipal ? 'Si' : 'No'}</span></td>
           <td>${formatearFecha(pub.timestamp)}</td>
           <td class="acciones">
@@ -959,7 +1074,7 @@
       `;
       mensajeGlobal.className = `mensaje mensaje-${tipo}`;
       mensajeGlobal.classList.remove('hidden');
-      setTimeout(() => mensajeGlobal.classList.add('hidden'), 4000);
+      setTimeout(() => mensajeGlobal.classList.add('hidden'), 5000);
     }
     
     function limpiarFormulario() {
@@ -967,10 +1082,22 @@
       document.getElementById('publicacionId').value = '';
       document.getElementById('autor').value = 'Redaccion Sureste Claro';
       imgUrlFinal.value = '';
-      uploadedImageUrl = '';
-      previewUpload.classList.add('hidden');
-      previewUrl.classList.add('hidden');
+      currentImageData = '';
+      imgUrlInput.value = '';
+      
+      // Reset upload area
+      previewContainerUpload.classList.add('hidden');
+      previewContainerUrl.classList.add('hidden');
+      uploadArea.style.display = '';
       uploadStatus.textContent = '';
+      imgFile.value = '';
+      
+      // Reset tabs to upload
+      imgTabs.forEach(t => t.classList.remove('active'));
+      document.querySelector('[data-img-tab="upload"]').classList.add('active');
+      imgPanelUpload.classList.add('active');
+      imgPanelUrl.classList.remove('active');
+      
       modoEdicion = false;
       formTitulo.textContent = 'Nueva Publicacion';
       btnGuardar.innerHTML = `
@@ -991,19 +1118,41 @@
       document.getElementById('categoria').value = pub.categoria || '';
       document.getElementById('autor').value = pub.autor || 'Redaccion Sureste Claro';
       document.getElementById('cargo').value = pub.cargo || '';
+      document.getElementById('imgCreditos').value = pub.img_creditos || pub.imgCreditos || '';
       
       const imgUrl = pub.img_url || pub.imgurl || pub.imgUrl || '';
-      imgUrlInput.value = imgUrl;
-      imgUrlFinal.value = imgUrl;
+      
+      // Limpiar previews
+      previewContainerUpload.classList.add('hidden');
+      previewContainerUrl.classList.add('hidden');
+      uploadArea.style.display = '';
+      uploadStatus.textContent = '';
       
       if (imgUrl) {
-        previewUrl.src = imgUrl;
-        previewUrl.classList.remove('hidden');
-        // Cambiar a tab de URL
-        imgTabs.forEach(t => t.classList.remove('active'));
-        document.querySelector('[data-img-tab="url"]').classList.add('active');
-        imgPanelUpload.classList.remove('active');
-        imgPanelUrl.classList.add('active');
+        imgUrlFinal.value = imgUrl;
+        
+        // Si es base64, mostrar en upload
+        if (imgUrl.startsWith('data:')) {
+          previewUpload.src = imgUrl;
+          previewContainerUpload.classList.remove('hidden');
+          uploadArea.style.display = 'none';
+          currentImageData = imgUrl;
+          
+          imgTabs.forEach(t => t.classList.remove('active'));
+          document.querySelector('[data-img-tab="upload"]').classList.add('active');
+          imgPanelUpload.classList.add('active');
+          imgPanelUrl.classList.remove('active');
+        } else {
+          // Es URL
+          imgUrlInput.value = imgUrl;
+          previewUrl.src = imgUrl;
+          previewContainerUrl.classList.remove('hidden');
+          
+          imgTabs.forEach(t => t.classList.remove('active'));
+          document.querySelector('[data-img-tab="url"]').classList.add('active');
+          imgPanelUpload.classList.remove('active');
+          imgPanelUrl.classList.add('active');
+        }
       }
       
       document.getElementById('esPrincipal').checked = pub.es_principal == 1 || pub.esprincipal || pub.esPrincipal || false;
@@ -1035,6 +1184,9 @@
         document.querySelector('[data-tab="crear"]').classList.add('active');
         panelLista.classList.remove('active');
         panelCrear.classList.add('active');
+        
+        // Scroll al inicio del formulario
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } catch (error) {
         mostrarMensaje('Error al cargar la publicacion', 'error');
       }
@@ -1101,8 +1253,21 @@
     formPublicacion.addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      // Obtener la URL de imagen final
-      const finalImgUrl = imgUrlFinal.value || imgUrlInput.value.trim() || uploadedImageUrl;
+      // Determinar URL de imagen final
+      let finalImgUrl = '';
+      
+      // Primero verificar si hay imagen subida (base64)
+      if (currentImageData) {
+        finalImgUrl = currentImageData;
+      } 
+      // Si no, verificar URL input
+      else if (imgUrlInput.value.trim()) {
+        finalImgUrl = imgUrlInput.value.trim();
+      }
+      // Si no, usar el valor guardado
+      else if (imgUrlFinal.value) {
+        finalImgUrl = imgUrlFinal.value;
+      }
       
       const datos = {
         titulo: document.getElementById('titulo').value.trim(),
@@ -1112,6 +1277,7 @@
         autor: document.getElementById('autor').value.trim() || 'Redaccion Sureste Claro',
         cargo: document.getElementById('cargo').value.trim(),
         imgUrl: finalImgUrl,
+        imgCreditos: document.getElementById('imgCreditos').value.trim(),
         esPrincipal: document.getElementById('esPrincipal').checked
       };
       
@@ -1119,8 +1285,12 @@
         datos.id = document.getElementById('publicacionId').value;
       }
       
+      console.log('Datos a guardar:', { ...datos, imgUrl: datos.imgUrl.substring(0, 100) + '...' });
+      
       try {
         btnGuardar.disabled = true;
+        btnGuardar.innerHTML = 'Guardando...';
+        
         await guardarPublicacion(datos);
         mostrarMensaje(modoEdicion ? 'Publicacion actualizada correctamente' : 'Noticia publicada correctamente');
         limpiarFormulario();
@@ -1135,6 +1305,21 @@
         mostrarMensaje(error.message || 'Error al guardar la publicacion', 'error');
       } finally {
         btnGuardar.disabled = false;
+        btnGuardar.innerHTML = modoEdicion ? `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+            <polyline points="17 21 17 13 7 13 7 21"/>
+            <polyline points="7 3 7 8 15 8"/>
+          </svg>
+          Guardar cambios
+        ` : `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+            <polyline points="17 21 17 13 7 13 7 21"/>
+            <polyline points="7 3 7 8 15 8"/>
+          </svg>
+          Publicar noticia
+        `;
       }
     });
     

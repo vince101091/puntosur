@@ -80,6 +80,12 @@ function getMiniatura(articulo) {
   return url.trim();
 }
 
+// Obtener creditos de imagen
+function getImageCreditos(articulo) {
+  if (!articulo) return '';
+  return articulo.img_creditos || articulo.imgCreditos || articulo.imgcreditos || '';
+}
+
 // Manejar error de imagen
 function handleImgError(img) {
   if (img) {
@@ -103,17 +109,15 @@ async function fetchNoticias(params = {}) {
     if (params.offset) query.append('offset', params.offset);
     
     const url = `${API_URL}/api/noticias?${query.toString()}`;
-    console.log('[v0] Fetching noticias:', url);
     
     const response = await fetch(url);
     
     if (!response.ok) {
-      console.error('[v0] Error de red:', response.status, response.statusText);
+      console.error('Error de red:', response.status, response.statusText);
       return [];
     }
     
     const data = await response.json();
-    console.log('[v0] Noticias recibidas:', data);
     
     // Manejar diferentes formatos de respuesta
     if (Array.isArray(data)) {
@@ -122,7 +126,7 @@ async function fetchNoticias(params = {}) {
     
     return data.articulos || data.noticias || [];
   } catch (error) {
-    console.error('[v0] Error obteniendo noticias:', error);
+    console.error('Error obteniendo noticias:', error);
     return [];
   }
 }
@@ -130,27 +134,25 @@ async function fetchNoticias(params = {}) {
 async function fetchNoticia(id) {
   try {
     if (!id) {
-      console.error('[v0] ID no proporcionado');
+      console.error('ID no proporcionado');
       return null;
     }
     
     const url = `${API_URL}/api/noticia?id=${id}`;
-    console.log('[v0] Fetching noticia:', url);
     
     const response = await fetch(url);
     
     if (!response.ok) {
-      console.error('[v0] Error de red:', response.status, response.statusText);
+      console.error('Error de red:', response.status, response.statusText);
       return null;
     }
     
     const data = await response.json();
-    console.log('[v0] Noticia recibida:', data);
     
     // Manejar diferentes formatos de respuesta
     return data.articulo || data.noticia || data || null;
   } catch (error) {
-    console.error('[v0] Error obteniendo noticia:', error);
+    console.error('Error obteniendo noticia:', error);
     return null;
   }
 }
@@ -180,11 +182,13 @@ function renderHeroCard(noticia) {
   const resumen = noticia.resumen || '';
   const autor = noticia.autor || 'Redaccion Sureste Claro';
   const fecha = formatearFecha(noticia.timestamp);
+  const creditos = getImageCreditos(noticia);
   
   return `
     <a href="noticia.html?id=${noticia.id}" class="hero-card">
       <div class="hero-img">
         <img src="${img}" alt="${titulo}" onerror="handleImgError(this)" loading="lazy">
+        ${creditos ? `<span class="img-creditos">${creditos}</span>` : ''}
       </div>
       <div class="hero-body">
         <span class="hero-cat" style="background: ${getCategoriaColor(cat)}">${cat}</span>
@@ -268,15 +272,12 @@ function renderCategoryItem(noticia) {
 // =====================================================
 
 async function initHomePage() {
-  console.log('[v0] Iniciando pagina principal');
-  
   // Fecha
   const fechaEl = document.getElementById('fechaHoy');
   if (fechaEl) fechaEl.textContent = obtenerFechaHoy();
   
   // Cargar noticias principales
   const noticias = await fetchNoticias({ limit: 20 });
-  console.log('[v0] Total noticias cargadas:', noticias.length);
   
   // Hero
   const heroSection = document.getElementById('heroSection');
@@ -313,9 +314,7 @@ async function loadSection(categoria, containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
   
-  console.log('[v0] Cargando seccion:', categoria);
   const noticias = await fetchNoticias({ categoria, limit: 3 });
-  console.log('[v0] Noticias para', categoria, ':', noticias.length);
   
   if (noticias.length === 0) {
     container.innerHTML = '<div class="empty-state">No hay noticias en esta seccion</div>';
@@ -329,12 +328,9 @@ async function loadSection(categoria, containerId) {
 // =====================================================
 
 async function initCategoryPage() {
-  console.log('[v0] Iniciando pagina de categoria');
-  
   // Obtener categoria de la URL
   const params = new URLSearchParams(window.location.search);
   const categoria = params.get('cat') || 'sureste';
-  console.log('[v0] Categoria:', categoria);
   
   // Fecha
   const fechaEl = document.getElementById('fechaHoy');
@@ -375,12 +371,29 @@ async function initCategoryPage() {
   // Cargar noticias de la categoria
   const listEl = document.getElementById('newsList');
   if (!listEl) {
-    console.error('[v0] Elemento newsList no encontrado');
+    console.error('Elemento newsList no encontrado');
     return;
   }
   
+  // Mostrar estado de carga
+  listEl.innerHTML = `
+    <div class="category-item skeleton-item">
+      <div class="skeleton skeleton-img-cat"></div>
+      <div style="flex:1">
+        <div class="skeleton" style="height: 24px; width: 80%; margin-bottom: 12px;"></div>
+        <div class="skeleton" style="height: 16px; width: 60%;"></div>
+      </div>
+    </div>
+    <div class="category-item skeleton-item">
+      <div class="skeleton skeleton-img-cat"></div>
+      <div style="flex:1">
+        <div class="skeleton" style="height: 24px; width: 80%; margin-bottom: 12px;"></div>
+        <div class="skeleton" style="height: 16px; width: 60%;"></div>
+      </div>
+    </div>
+  `;
+  
   const noticias = await fetchNoticias({ categoria, limit: 30 });
-  console.log('[v0] Noticias de categoria cargadas:', noticias.length);
   
   if (noticias.length === 0) {
     listEl.innerHTML = '<div class="empty-state">No hay noticias en esta categoria</div>';
@@ -407,8 +420,6 @@ function formatearCuerpo(texto) {
 }
 
 async function initArticlePage() {
-  console.log('[v0] Iniciando pagina de articulo');
-  
   // Fecha
   const fechaEl = document.getElementById('fechaHoy');
   if (fechaEl) fechaEl.textContent = obtenerFechaHoy();
@@ -416,11 +427,10 @@ async function initArticlePage() {
   // Obtener ID de la URL
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id');
-  console.log('[v0] ID de noticia:', id);
   
   const container = document.getElementById('articleContent');
   if (!container) {
-    console.error('[v0] Elemento articleContent no encontrado');
+    console.error('Elemento articleContent no encontrado');
     return;
   }
   
@@ -453,8 +463,6 @@ async function initArticlePage() {
     return;
   }
   
-  console.log('[v0] Noticia cargada:', noticia.titulo);
-  
   document.title = `${noticia.titulo || 'Noticia'} | Sureste Claro`;
   
   const img = getImagen(noticia);
@@ -464,6 +472,7 @@ async function initArticlePage() {
   const cargo = noticia.cargo || '';
   const fecha = formatearFecha(noticia.timestamp);
   const cuerpo = noticia.cuerpo || noticia.resumen || '';
+  const creditos = getImageCreditos(noticia);
   
   container.innerHTML = `
     <article class="article">
@@ -477,13 +486,29 @@ async function initArticlePage() {
         </div>
       </header>
       
-      <div class="article-img">
-        <img src="${img}" alt="${titulo}" onerror="handleImgError(this)">
-      </div>
+      <figure class="article-figure">
+        <div class="article-img">
+          <img src="${img}" alt="${titulo}" onerror="handleImgError(this)">
+        </div>
+        ${creditos ? `<figcaption class="article-img-creditos">${creditos}</figcaption>` : ''}
+      </figure>
       
       <div class="article-content">
         ${formatearCuerpo(cuerpo)}
       </div>
+      
+      <footer class="article-footer">
+        <a href="index.html" class="btn-volver">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Volver al inicio
+        </a>
+        <a href="categoria.html?cat=${cat.toLowerCase()}" class="btn-categoria" style="background: ${getCategoriaColor(cat)}">
+          Mas de ${cat}
+        </a>
+      </footer>
     </article>
   `;
 }
@@ -527,16 +552,12 @@ function initMobileMenu() {
 // =====================================================
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('[v0] DOM cargado, iniciando app');
-  
   // Siempre inicializar menu movil
   initMobileMenu();
   
   // Determinar que pagina estamos viendo
   const path = window.location.pathname;
   const filename = path.split('/').pop() || 'index.html';
-  
-  console.log('[v0] Pagina actual:', filename);
   
   if (filename === 'categoria.html' || filename.startsWith('categoria')) {
     initCategoryPage();
