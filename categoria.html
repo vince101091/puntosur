@@ -3,30 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <meta name="theme-color" content="#0f172a">
+  <meta name="theme-color" content="#1a365d">
   <title>Categoria | Sureste Claro</title>
   <meta name="description" content="Informacion clara para la gente del sureste.">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- HEADER -->
   <header class="header">
-    <div class="header-bar">
-      <div class="container header-bar-inner">
+    <div class="header-top">
+      <div class="container header-top-inner">
         <span class="fecha" id="fechaHoy"></span>
-        <span class="tagline">@suresteclaro</span>
+        <span class="social-tag">@suresteclaro</span>
       </div>
     </div>
     
     <nav class="nav">
       <div class="container nav-inner">
         <a href="index.html" class="logo">
-          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-L1U89PPKtc1k3jaLfyFMXm5x1OLROl.png" alt="Sureste Claro" class="logo-img">
+          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-L1U89PPKtc1k3jaLfyFMXm5x1OLROl.png" alt="Logo Sureste Claro" class="logo-img">
+          <div class="logo-text">
+            <span class="logo-name">SURESTE</span>
+            <span class="logo-name logo-name-red">CLARO</span>
+          </div>
         </a>
         
         <button class="menu-btn" id="menuBtn" aria-label="Abrir menu">
@@ -50,7 +54,10 @@
   <div class="menu-overlay" id="menuOverlay"></div>
   <aside class="menu-mobile" id="menuMobile">
     <div class="menu-mobile-header">
-      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-L1U89PPKtc1k3jaLfyFMXm5x1OLROl.png" alt="Sureste Claro" class="menu-mobile-logo">
+      <div class="menu-mobile-brand">
+        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-L1U89PPKtc1k3jaLfyFMXm5x1OLROl.png" alt="Sureste Claro" class="menu-mobile-logo">
+        <span class="menu-mobile-name">SURESTE CLARO</span>
+      </div>
       <button class="menu-close" id="menuClose" aria-label="Cerrar menu">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -73,12 +80,34 @@
   <!-- CONTENIDO PRINCIPAL -->
   <main class="main">
     <div class="container">
-      <h1 class="page-title" id="pageTitle">Cargando...</h1>
+      <div class="page-header">
+        <h1 class="page-title" id="pageTitle">
+          <span class="page-title-badge">Cargando...</span>
+        </h1>
+      </div>
       
       <div class="category-list" id="newsList">
-        <div class="list-skeleton"><div class="skeleton skeleton-row"></div></div>
-        <div class="list-skeleton"><div class="skeleton skeleton-row"></div></div>
-        <div class="list-skeleton"><div class="skeleton skeleton-row"></div></div>
+        <div class="category-item" style="opacity: 0.5;">
+          <div class="skeleton" style="width: 140px; height: 100px; border-radius: 8px;"></div>
+          <div style="flex: 1; padding: 8px 0;">
+            <div class="skeleton" style="height: 24px; margin-bottom: 8px;"></div>
+            <div class="skeleton" style="height: 16px; width: 60%;"></div>
+          </div>
+        </div>
+        <div class="category-item" style="opacity: 0.5;">
+          <div class="skeleton" style="width: 140px; height: 100px; border-radius: 8px;"></div>
+          <div style="flex: 1; padding: 8px 0;">
+            <div class="skeleton" style="height: 24px; margin-bottom: 8px;"></div>
+            <div class="skeleton" style="height: 16px; width: 60%;"></div>
+          </div>
+        </div>
+        <div class="category-item" style="opacity: 0.5;">
+          <div class="skeleton" style="width: 140px; height: 100px; border-radius: 8px;"></div>
+          <div style="flex: 1; padding: 8px 0;">
+            <div class="skeleton" style="height: 24px; margin-bottom: 8px;"></div>
+            <div class="skeleton" style="height: 16px; width: 60%;"></div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
@@ -88,7 +117,10 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-L1U89PPKtc1k3jaLfyFMXm5x1OLROl.png" alt="Sureste Claro" class="footer-logo">
+          <div class="footer-logo-wrap">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-L1U89PPKtc1k3jaLfyFMXm5x1OLROl.png" alt="Sureste Claro" class="footer-logo">
+            <span class="footer-logo-text">SURESTE CLARO</span>
+          </div>
           <p class="footer-desc">Informacion clara para la gente del sureste de Mexico.</p>
           <p class="footer-social">@suresteclaro</p>
         </div>
@@ -108,7 +140,7 @@
       </div>
       
       <div class="footer-bottom">
-        <p>2026 Sureste Claro. Todos los derechos reservados.</p>
+        <p>&copy; 2026 Sureste Claro. Todos los derechos reservados.</p>
       </div>
     </div>
   </footer>

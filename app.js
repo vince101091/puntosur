@@ -18,7 +18,7 @@ function formatearFecha(timestamp) {
       month: 'long', 
       year: 'numeric' 
     });
-  } catch {
+  } catch (e) {
     return '';
   }
 }
@@ -31,7 +31,7 @@ function formatearFechaCorta(timestamp) {
       day: 'numeric', 
       month: 'short' 
     });
-  } catch {
+  } catch (e) {
     return '';
   }
 }
@@ -50,32 +50,49 @@ function obtenerFechaHoy() {
 
 // Placeholder SVG como data URI
 function placeholderImg() {
-  return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23e2e8f0" width="400" height="300"/%3E%3Ctext fill="%2394a3b8" font-family="sans-serif" font-size="14" x="50%25" y="50%25" text-anchor="middle" dy=".3em"%3ESin imagen%3C/text%3E%3C/svg%3E';
+  return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23e2e8f0" width="400" height="300"/%3E%3Ctext fill="%2364748b" font-family="sans-serif" font-size="14" x="50%25" y="50%25" text-anchor="middle" dy=".3em"%3ESin imagen%3C/text%3E%3C/svg%3E';
 }
 
-// Obtener imagen con fallbacks
+// Obtener imagen con fallbacks - CORREGIDO para manejar todos los campos
 function getImagen(articulo) {
   if (!articulo) return placeholderImg();
-  const url = articulo.img_url || articulo.imgurl || articulo.img_small || '';
-  if (!url || url.trim() === '') return placeholderImg();
-  return url;
+  
+  // Intentar todos los posibles campos de imagen
+  const url = articulo.img_url || articulo.imgurl || articulo.imgUrl || articulo.imagen || articulo.img_small || '';
+  
+  if (!url || url.trim() === '' || url === 'null' || url === 'undefined') {
+    return placeholderImg();
+  }
+  
+  return url.trim();
 }
 
 function getMiniatura(articulo) {
   if (!articulo) return placeholderImg();
-  const url = articulo.img_small || articulo.img_url || articulo.imgurl || '';
-  if (!url || url.trim() === '') return placeholderImg();
-  return url;
+  
+  // Intentar miniatura primero, luego imagen principal
+  const url = articulo.img_small || articulo.imgSmall || articulo.img_url || articulo.imgurl || articulo.imgUrl || articulo.imagen || '';
+  
+  if (!url || url.trim() === '' || url === 'null' || url === 'undefined') {
+    return placeholderImg();
+  }
+  
+  return url.trim();
 }
 
 // Manejar error de imagen
 function handleImgError(img) {
-  img.onerror = null;
-  img.src = placeholderImg();
+  if (img) {
+    img.onerror = null;
+    img.src = placeholderImg();
+  }
 }
 
+// Hacer funcion global
+window.handleImgError = handleImgError;
+
 // =====================================================
-// API
+// API - CORREGIDO para manejar errores mejor
 // =====================================================
 
 async function fetchNoticias(params = {}) {
@@ -86,36 +103,54 @@ async function fetchNoticias(params = {}) {
     if (params.offset) query.append('offset', params.offset);
     
     const url = `${API_URL}/api/noticias?${query.toString()}`;
+    console.log('[v0] Fetching noticias:', url);
+    
     const response = await fetch(url);
     
     if (!response.ok) {
-      console.error('Error de red:', response.status);
+      console.error('[v0] Error de red:', response.status, response.statusText);
       return [];
     }
     
     const data = await response.json();
-    return data.articulos || [];
+    console.log('[v0] Noticias recibidas:', data);
+    
+    // Manejar diferentes formatos de respuesta
+    if (Array.isArray(data)) {
+      return data;
+    }
+    
+    return data.articulos || data.noticias || [];
   } catch (error) {
-    console.error('Error obteniendo noticias:', error);
+    console.error('[v0] Error obteniendo noticias:', error);
     return [];
   }
 }
 
 async function fetchNoticia(id) {
   try {
-    if (!id) return null;
+    if (!id) {
+      console.error('[v0] ID no proporcionado');
+      return null;
+    }
     
-    const response = await fetch(`${API_URL}/api/noticia?id=${id}`);
+    const url = `${API_URL}/api/noticia?id=${id}`;
+    console.log('[v0] Fetching noticia:', url);
+    
+    const response = await fetch(url);
     
     if (!response.ok) {
-      console.error('Error de red:', response.status);
+      console.error('[v0] Error de red:', response.status, response.statusText);
       return null;
     }
     
     const data = await response.json();
-    return data.articulo || data || null;
+    console.log('[v0] Noticia recibida:', data);
+    
+    // Manejar diferentes formatos de respuesta
+    return data.articulo || data.noticia || data || null;
   } catch (error) {
-    console.error('Error obteniendo noticia:', error);
+    console.error('[v0] Error obteniendo noticia:', error);
     return null;
   }
 }
@@ -123,6 +158,16 @@ async function fetchNoticia(id) {
 // =====================================================
 // COMPONENTES DE RENDERIZADO
 // =====================================================
+
+function getCategoriaColor(cat) {
+  const colores = {
+    'sureste': '#B91C1C',
+    'nacional': '#2563eb',
+    'seguridad': '#dc2626',
+    'deportes': '#059669'
+  };
+  return colores[cat?.toLowerCase()] || '#B91C1C';
+}
 
 function renderHeroCard(noticia) {
   if (!noticia) {
@@ -142,7 +187,7 @@ function renderHeroCard(noticia) {
         <img src="${img}" alt="${titulo}" onerror="handleImgError(this)" loading="lazy">
       </div>
       <div class="hero-body">
-        <span class="hero-cat">${cat}</span>
+        <span class="hero-cat" style="background: ${getCategoriaColor(cat)}">${cat}</span>
         <h1 class="hero-title">${titulo}</h1>
         ${resumen ? `<p class="hero-excerpt">${resumen}</p>` : ''}
         <div class="hero-meta">
@@ -168,7 +213,7 @@ function renderNewsCard(noticia) {
         <img src="${img}" alt="${titulo}" onerror="handleImgError(this)" loading="lazy">
       </div>
       <div class="news-card-body">
-        <span class="news-card-cat">${cat}</span>
+        <span class="news-card-cat" style="color: ${getCategoriaColor(cat)}">${cat}</span>
         <h3 class="news-card-title">${titulo}</h3>
         <span class="news-card-date">${fecha}</span>
       </div>
@@ -223,25 +268,30 @@ function renderCategoryItem(noticia) {
 // =====================================================
 
 async function initHomePage() {
+  console.log('[v0] Iniciando pagina principal');
+  
   // Fecha
   const fechaEl = document.getElementById('fechaHoy');
   if (fechaEl) fechaEl.textContent = obtenerFechaHoy();
   
-  // Cargar noticias
+  // Cargar noticias principales
   const noticias = await fetchNoticias({ limit: 20 });
+  console.log('[v0] Total noticias cargadas:', noticias.length);
   
   // Hero
   const heroSection = document.getElementById('heroSection');
   if (heroSection) {
     if (noticias.length === 0) {
-      heroSection.innerHTML = '<div class="empty-state">No hay noticias disponibles</div>';
+      heroSection.innerHTML = '<div class="empty-state">No hay noticias disponibles. Publica desde el panel de administracion.</div>';
     } else {
-      let principal = noticias.find(n => n.es_principal == 1 || n.esprincipal == 1) || noticias[0];
+      // Buscar noticia principal
+      let principal = noticias.find(n => n.es_principal == 1 || n.esprincipal == 1 || n.esPrincipal == 1);
+      if (!principal) principal = noticias[0];
       heroSection.innerHTML = renderHeroCard(principal);
     }
   }
   
-  // Recientes
+  // Recientes (excluyendo la principal)
   const recientesEl = document.getElementById('noticiasRecientes');
   if (recientesEl) {
     const recientes = noticias.slice(1, 7);
@@ -252,17 +302,20 @@ async function initHomePage() {
     }
   }
   
-  // Secciones
+  // Cargar secciones por categoria
   loadSection('sureste', 'noticiasSureste');
   loadSection('nacional', 'noticiasNacional');
   loadSection('seguridad', 'noticiasSeguridad');
+  loadSection('deportes', 'noticiasDeportes');
 }
 
 async function loadSection(categoria, containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
   
+  console.log('[v0] Cargando seccion:', categoria);
   const noticias = await fetchNoticias({ categoria, limit: 3 });
+  console.log('[v0] Noticias para', categoria, ':', noticias.length);
   
   if (noticias.length === 0) {
     container.innerHTML = '<div class="empty-state">No hay noticias en esta seccion</div>';
@@ -272,12 +325,20 @@ async function loadSection(categoria, containerId) {
 }
 
 // =====================================================
-// PAGINA CATEGORIA
+// PAGINA CATEGORIA - CORREGIDO
 // =====================================================
 
 async function initCategoryPage() {
+  console.log('[v0] Iniciando pagina de categoria');
+  
+  // Obtener categoria de la URL
   const params = new URLSearchParams(window.location.search);
   const categoria = params.get('cat') || 'sureste';
+  console.log('[v0] Categoria:', categoria);
+  
+  // Fecha
+  const fechaEl = document.getElementById('fechaHoy');
+  if (fechaEl) fechaEl.textContent = obtenerFechaHoy();
   
   const titulos = {
     'sureste': 'Sureste',
@@ -286,14 +347,24 @@ async function initCategoryPage() {
     'deportes': 'Deportes'
   };
   
-  // Titulo
+  const colores = {
+    'sureste': '#B91C1C',
+    'nacional': '#2563eb',
+    'seguridad': '#dc2626',
+    'deportes': '#059669'
+  };
+  
+  // Titulo de la pagina
   const tituloEl = document.getElementById('pageTitle');
   if (tituloEl) {
-    tituloEl.textContent = titulos[categoria] || categoria;
+    const nombreCategoria = titulos[categoria] || categoria.charAt(0).toUpperCase() + categoria.slice(1);
+    const color = colores[categoria] || '#B91C1C';
+    tituloEl.innerHTML = `<span class="page-title-badge" style="background: ${color}">${nombreCategoria}</span>`;
   }
+  
   document.title = `${titulos[categoria] || categoria} | Sureste Claro`;
   
-  // Marcar link activo en nav
+  // Marcar link activo en navegacion
   document.querySelectorAll('.nav-link, .menu-mobile-link').forEach(link => {
     link.classList.remove('active');
     if (link.href && link.href.includes(`cat=${categoria}`)) {
@@ -301,11 +372,15 @@ async function initCategoryPage() {
     }
   });
   
-  // Cargar noticias
+  // Cargar noticias de la categoria
   const listEl = document.getElementById('newsList');
-  if (!listEl) return;
+  if (!listEl) {
+    console.error('[v0] Elemento newsList no encontrado');
+    return;
+  }
   
-  const noticias = await fetchNoticias({ categoria, limit: 20 });
+  const noticias = await fetchNoticias({ categoria, limit: 30 });
+  console.log('[v0] Noticias de categoria cargadas:', noticias.length);
   
   if (noticias.length === 0) {
     listEl.innerHTML = '<div class="empty-state">No hay noticias en esta categoria</div>';
@@ -315,33 +390,70 @@ async function initCategoryPage() {
 }
 
 // =====================================================
-// PAGINA NOTICIA
+// PAGINA NOTICIA - CORREGIDO
 // =====================================================
 
 function formatearCuerpo(texto) {
-  if (!texto) return '';
+  if (!texto) return '<p>Sin contenido disponible.</p>';
+  
+  // Dividir en parrafos
   const parrafos = texto.split(/\n\n+/).filter(p => p.trim());
+  
+  if (parrafos.length === 0) {
+    return `<p>${texto.replace(/\n/g, '<br>')}</p>`;
+  }
+  
   return parrafos.map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
 }
 
 async function initArticlePage() {
+  console.log('[v0] Iniciando pagina de articulo');
+  
+  // Fecha
+  const fechaEl = document.getElementById('fechaHoy');
+  if (fechaEl) fechaEl.textContent = obtenerFechaHoy();
+  
+  // Obtener ID de la URL
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id');
+  console.log('[v0] ID de noticia:', id);
   
   const container = document.getElementById('articleContent');
-  if (!container) return;
-  
-  if (!id) {
-    container.innerHTML = '<div class="empty-state">Noticia no encontrada</div>';
+  if (!container) {
+    console.error('[v0] Elemento articleContent no encontrado');
     return;
   }
+  
+  if (!id) {
+    container.innerHTML = '<div class="empty-state">Noticia no encontrada. No se proporciono un ID valido.</div>';
+    return;
+  }
+  
+  // Mostrar estado de carga
+  container.innerHTML = `
+    <div class="article">
+      <div class="article-header">
+        <div class="skeleton" style="width: 80px; height: 24px; margin-bottom: 16px;"></div>
+        <div class="skeleton" style="height: 40px; margin-bottom: 12px;"></div>
+        <div class="skeleton" style="width: 200px; height: 20px;"></div>
+      </div>
+      <div class="skeleton skeleton-img"></div>
+      <div style="padding: 24px;">
+        <div class="skeleton" style="height: 20px; margin-bottom: 16px;"></div>
+        <div class="skeleton" style="height: 20px; margin-bottom: 16px;"></div>
+        <div class="skeleton" style="height: 20px; width: 80%;"></div>
+      </div>
+    </div>
+  `;
   
   const noticia = await fetchNoticia(id);
   
   if (!noticia) {
-    container.innerHTML = '<div class="empty-state">Noticia no encontrada</div>';
+    container.innerHTML = '<div class="empty-state">Noticia no encontrada. Es posible que haya sido eliminada o el enlace sea incorrecto.</div>';
     return;
   }
+  
+  console.log('[v0] Noticia cargada:', noticia.titulo);
   
   document.title = `${noticia.titulo || 'Noticia'} | Sureste Claro`;
   
@@ -356,7 +468,7 @@ async function initArticlePage() {
   container.innerHTML = `
     <article class="article">
       <header class="article-header">
-        <span class="article-cat">${cat}</span>
+        <span class="article-cat" style="background: ${getCategoriaColor(cat)}">${cat}</span>
         <h1 class="article-title">${titulo}</h1>
         <div class="article-meta">
           <span class="article-author">${autor}</span>
@@ -411,19 +523,27 @@ function initMobileMenu() {
 }
 
 // =====================================================
-// INICIALIZACION
+// INICIALIZACION - CORREGIDO
 // =====================================================
 
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('[v0] DOM cargado, iniciando app');
+  
+  // Siempre inicializar menu movil
   initMobileMenu();
   
+  // Determinar que pagina estamos viendo
   const path = window.location.pathname;
+  const filename = path.split('/').pop() || 'index.html';
   
-  if (path.includes('categoria.html')) {
+  console.log('[v0] Pagina actual:', filename);
+  
+  if (filename === 'categoria.html' || filename.startsWith('categoria')) {
     initCategoryPage();
-  } else if (path.includes('noticia.html')) {
+  } else if (filename === 'noticia.html' || filename.startsWith('noticia')) {
     initArticlePage();
   } else {
+    // Pagina principal (index.html o raiz)
     initHomePage();
   }
 });
