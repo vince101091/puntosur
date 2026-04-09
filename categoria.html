@@ -3,92 +3,112 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <meta name="theme-color" content="#C62828">
-  <title>Categoría | Punto Sur Sureste</title>
-  <meta name="description" content="Noticias del Sureste, información al momento.">
+  <meta name="theme-color" content="#1E3A5F">
+  <title>Categoria | Sureste Claro</title>
+  <meta name="description" content="Informacion clara para la gente del sureste.">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Montserrat:wght@800&family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- HEADER -->
   <header class="header">
-    <!-- Ticker de noticias -->
-    <div class="ticker">
-      <div class="ticker-content">
-        <span class="ticker-item">Noticias del Sureste, información al momento</span>
-        <span class="ticker-separator">•</span>
-        <span class="ticker-item">Cobertura en Chiapas, Tabasco, Campeche, Yucatán y Quintana Roo</span>
+    <div class="header-top">
+      <div class="header-top-container">
+        <span class="fecha-hoy"></span>
+        <span class="lema">Informacion clara para el sureste</span>
       </div>
     </div>
     
-    <!-- Navegación principal -->
     <nav class="nav">
       <div class="nav-container">
         <a href="index.html" class="logo">
-          <img src="logo.png" alt="Punto Sur Sureste" class="logo-img">
+          <img src="logo.png" alt="Sureste Claro" class="logo-img">
         </a>
         
-        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
-          <span class="menu-bar"></span>
-          <span class="menu-bar"></span>
-          <span class="menu-bar"></span>
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
         </button>
-        
-        <ul class="nav-menu" id="navMenu">
-          <li><a href="index.html" class="nav-link">Inicio</a></li>
-          <li><a href="categoria.html?cat=sureste" class="nav-link">Sureste</a></li>
-          <li><a href="categoria.html?cat=nacional" class="nav-link">Nacional</a></li>
-          <li><a href="categoria.html?cat=seguridad" class="nav-link">Seguridad</a></li>
-          <li><a href="categoria.html?cat=deportes" class="nav-link">Deportes</a></li>
-        </ul>
       </div>
     </nav>
+    
+    <div class="nav-categorias">
+      <div class="nav-categorias-container">
+        <a href="index.html" class="cat-link">Inicio</a>
+        <a href="categoria.html?cat=sureste" class="cat-link">Sureste</a>
+        <a href="categoria.html?cat=nacional" class="cat-link">Nacional</a>
+        <a href="categoria.html?cat=seguridad" class="cat-link">Seguridad</a>
+        <a href="categoria.html?cat=deportes" class="cat-link">Deportes</a>
+      </div>
+    </div>
   </header>
+
+  <!-- MENU MOVIL -->
+  <div class="menu-overlay" id="menuOverlay"></div>
+  <aside class="menu-movil" id="menuMovil">
+    <div class="menu-movil-header">
+      <img src="logo.png" alt="Sureste Claro" class="menu-movil-logo">
+      <button class="menu-cerrar" id="menuCerrar">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <nav class="menu-movil-nav">
+      <a href="index.html" class="menu-movil-link">Inicio</a>
+      <a href="categoria.html?cat=sureste" class="menu-movil-link">Sureste</a>
+      <a href="categoria.html?cat=nacional" class="menu-movil-link">Nacional</a>
+      <a href="categoria.html?cat=seguridad" class="menu-movil-link">Seguridad</a>
+      <a href="categoria.html?cat=deportes" class="menu-movil-link">Deportes</a>
+    </nav>
+    <div class="menu-movil-footer">
+      <p>@suresteclaro</p>
+      <p>#sigamoslanoticia</p>
+    </div>
+  </aside>
 
   <!-- CONTENIDO PRINCIPAL -->
   <main class="main">
-    <!-- Título de la categoría -->
-    <section class="seccion">
-      <div class="seccion-header">
-        <h1 class="seccion-titulo" id="tituloCategoria">Cargando...</h1>
-      </div>
-      
-      <!-- Lista de noticias -->
-      <div class="noticias-lista noticias-lista-full" id="listaNoticias">
-        <div class="loading">Cargando noticias...</div>
-      </div>
-    </section>
+    <h1 class="pagina-titulo" id="tituloCategoria">Cargando...</h1>
+    
+    <div class="lista-categoria" id="listaNoticias">
+      <div class="loading-placeholder">Cargando noticias...</div>
+    </div>
   </main>
 
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-brand">
-        <img src="logo.png" alt="Punto Sur Sureste" class="footer-logo">
-        <p class="footer-tagline">Noticias del Sureste, información al momento</p>
+        <img src="logo.png" alt="Sureste Claro" class="footer-logo">
+        <p class="footer-lema">Informacion clara para la gente del sureste</p>
       </div>
       
-      <div class="footer-secciones">
-        <h3 class="footer-titulo">Secciones</h3>
-        <ul class="footer-links">
-          <li><a href="categoria.html?cat=sureste">Sureste</a></li>
-          <li><a href="categoria.html?cat=nacional">Nacional</a></li>
-          <li><a href="categoria.html?cat=seguridad">Seguridad</a></li>
-          <li><a href="categoria.html?cat=deportes">Deportes</a></li>
-        </ul>
+      <div class="footer-links">
+        <h3>Secciones</h3>
+        <a href="categoria.html?cat=sureste">Sureste</a>
+        <a href="categoria.html?cat=nacional">Nacional</a>
+        <a href="categoria.html?cat=seguridad">Seguridad</a>
+        <a href="categoria.html?cat=deportes">Deportes</a>
       </div>
       
-      <div class="footer-contacto">
-        <h3 class="footer-titulo">Contacto</h3>
-        <p class="footer-texto">Sureste de México</p>
-        <p class="footer-texto">contacto@puntosursureste.com</p>
+      <div class="footer-social">
+        <h3>Siguenos</h3>
+        <p>@suresteclaro</p>
+        <p>#sigamoslanoticia</p>
       </div>
     </div>
     
     <div class="footer-legal">
-      <p>&copy; 2026 Punto Sur Sureste. Todos los derechos reservados.</p>
+      <p>2026 Sureste Claro. Todos los derechos reservados.</p>
     </div>
   </footer>
 

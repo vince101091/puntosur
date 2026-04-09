@@ -4,37 +4,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Panel Admin | Punto Sur Sureste</title>
+  <title>Panel Admin | Sureste Claro</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
       --rojo: #C62828;
       --azul: #1E3A5F;
       --blanco: #FFFFFF;
-      --gris-carbon: #2E2E2E;
-      --gris-suave: #E5E5E5;
-      --gris-fondo: #F5F5F5;
-      --verde: #2E7D32;
+      --negro: #111111;
+      --gris-900: #1a1a1a;
+      --gris-700: #404040;
+      --gris-500: #737373;
+      --gris-300: #d4d4d4;
+      --gris-100: #f5f5f5;
+      --verde: #16a34a;
     }
-   
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-   
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
       font-family: 'Inter', system-ui, sans-serif;
-      background-color: var(--gris-fondo);
-      color: var(--gris-carbon);
+      background: var(--gris-100);
+      color: var(--gris-900);
       line-height: 1.5;
     }
-   
-    /* Header Admin */
+    
     .admin-header {
-      background-color: var(--azul);
+      background: var(--azul);
       color: var(--blanco);
       padding: 16px 20px;
       display: flex;
@@ -44,214 +42,169 @@
       top: 0;
       z-index: 100;
     }
-   
+    
     .admin-titulo {
-      font-family: 'Poppins', sans-serif;
-      font-size: 18px;
-      font-weight: 600;
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
     }
-   
+    
     .btn-salir {
-      background-color: var(--rojo);
+      background: var(--rojo);
       color: var(--blanco);
       border: none;
       padding: 8px 16px;
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      border-radius: 4px;
+      border-radius: 6px;
     }
-   
-    /* Contenedor principal */
+    
     .admin-container {
-      max-width: 1200px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 24px 20px;
+      padding: 24px 16px;
     }
-   
-    /* Login */
+    
     .login-container {
-      max-width: 400px;
-      margin: 100px auto;
+      max-width: 360px;
+      margin: 80px auto;
       background: var(--blanco);
       padding: 32px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
-   
+    
     .login-titulo {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Playfair Display', serif;
       font-size: 24px;
       margin-bottom: 24px;
       text-align: center;
       color: var(--azul);
     }
-   
-    /* Formularios */
-    .form-group {
-      margin-bottom: 20px;
-    }
-   
+    
+    .form-group { margin-bottom: 20px; }
+    
     .form-label {
       display: block;
       font-weight: 500;
       margin-bottom: 6px;
       font-size: 14px;
     }
-   
-    .form-input,
-    .form-select,
-    .form-textarea {
+    
+    .form-input, .form-select, .form-textarea {
       width: 100%;
       padding: 12px;
-      border: 1px solid var(--gris-suave);
-      border-radius: 4px;
+      border: 1px solid var(--gris-300);
+      border-radius: 8px;
       font-size: 16px;
       font-family: inherit;
+      transition: border-color 0.2s;
     }
-   
-    .form-input:focus,
-    .form-select:focus,
-    .form-textarea:focus {
+    
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
       outline: none;
       border-color: var(--azul);
     }
-   
-    .form-textarea {
-      min-height: 150px;
-      resize: vertical;
-    }
-   
+    
+    .form-textarea { min-height: 120px; resize: vertical; }
+    
     .form-checkbox {
       display: flex;
       align-items: center;
       gap: 8px;
     }
-   
-    .form-checkbox input {
-      width: 18px;
-      height: 18px;
-    }
-   
-    /* Botones */
+    
+    .form-checkbox input { width: 18px; height: 18px; }
+    
     .btn {
       padding: 12px 24px;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 600;
       border: none;
-      border-radius: 4px;
+      border-radius: 8px;
       cursor: pointer;
       transition: opacity 0.2s;
     }
-   
-    .btn:hover {
-      opacity: 0.9;
-    }
-   
-    .btn-primary {
-      background-color: var(--rojo);
-      color: var(--blanco);
-    }
-   
-    .btn-secondary {
-      background-color: var(--azul);
-      color: var(--blanco);
-    }
-   
-    .btn-success {
-      background-color: var(--verde);
-      color: var(--blanco);
-    }
-   
-    .btn-block {
-      width: 100%;
-    }
-   
-    .btn-sm {
-      padding: 8px 16px;
-      font-size: 14px;
-    }
-   
-    /* Tabs de navegación */
+    
+    .btn:hover { opacity: 0.9; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-primary { background: var(--rojo); color: var(--blanco); }
+    .btn-secondary { background: var(--azul); color: var(--blanco); }
+    .btn-success { background: var(--verde); color: var(--blanco); }
+    .btn-block { width: 100%; }
+    
     .admin-tabs {
       display: flex;
       gap: 0;
       margin-bottom: 24px;
-      border-bottom: 2px solid var(--gris-suave);
+      border-bottom: 2px solid var(--gris-300);
     }
-   
+    
     .admin-tab {
-      padding: 12px 24px;
+      padding: 12px 20px;
       background: none;
       border: none;
       font-size: 15px;
       font-weight: 600;
-      color: var(--gris-carbon);
+      color: var(--gris-700);
       cursor: pointer;
       border-bottom: 2px solid transparent;
       margin-bottom: -2px;
+      transition: color 0.2s;
     }
-   
+    
     .admin-tab.active {
       color: var(--rojo);
       border-bottom-color: var(--rojo);
     }
-   
-    /* Paneles */
+    
     .panel {
       display: none;
       background: var(--blanco);
       padding: 24px;
-      border-radius: 8px;
+      border-radius: 12px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
-   
-    .panel.active {
-      display: block;
-    }
-   
+    
+    .panel.active { display: block; }
+    
     .panel-titulo {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Playfair Display', serif;
       font-size: 20px;
       margin-bottom: 20px;
       color: var(--azul);
     }
-   
-    /* Tabla de publicaciones */
-    .tabla-container {
-      overflow-x: auto;
-    }
-   
+    
+    .tabla-container { overflow-x: auto; }
+    
     .tabla {
       width: 100%;
       border-collapse: collapse;
       font-size: 14px;
     }
-   
-    .tabla th,
-    .tabla td {
+    
+    .tabla th, .tabla td {
       padding: 12px;
       text-align: left;
-      border-bottom: 1px solid var(--gris-suave);
+      border-bottom: 1px solid var(--gris-300);
     }
-   
+    
     .tabla th {
-      background-color: var(--gris-fondo);
+      background: var(--gris-100);
       font-weight: 600;
       white-space: nowrap;
     }
-   
-    .tabla tr:hover {
-      background-color: var(--gris-fondo);
-    }
-   
+    
+    .tabla tr:hover { background: var(--gris-100); }
+    
     .tabla-titulo {
-      max-width: 250px;
+      max-width: 200px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-   
+    
     .badge {
       display: inline-block;
       padding: 4px 8px;
@@ -259,87 +212,53 @@
       font-size: 12px;
       font-weight: 600;
     }
-   
-    .badge-si {
-      background-color: #E8F5E9;
-      color: var(--verde);
-    }
-   
-    .badge-no {
-      background-color: var(--gris-suave);
-      color: #666;
-    }
-   
-    .acciones {
-      display: flex;
-      gap: 8px;
-    }
-   
+    
+    .badge-si { background: #dcfce7; color: var(--verde); }
+    .badge-no { background: var(--gris-100); color: var(--gris-500); }
+    
+    .acciones { display: flex; gap: 8px; }
+    
     .btn-editar {
-      background-color: var(--azul);
+      background: var(--azul);
       color: var(--blanco);
       padding: 6px 12px;
       font-size: 13px;
       border: none;
-      border-radius: 4px;
+      border-radius: 6px;
       cursor: pointer;
     }
-   
+    
     .btn-eliminar {
-      background-color: var(--rojo);
+      background: var(--rojo);
       color: var(--blanco);
       padding: 6px 12px;
       font-size: 13px;
       border: none;
-      border-radius: 4px;
+      border-radius: 6px;
       cursor: pointer;
     }
-   
-    /* Mensajes */
+    
     .mensaje {
       padding: 12px 16px;
-      border-radius: 4px;
+      border-radius: 8px;
       margin-bottom: 20px;
       font-weight: 500;
     }
-   
-    .mensaje-exito {
-      background-color: #E8F5E9;
-      color: var(--verde);
+    
+    .mensaje-exito { background: #dcfce7; color: var(--verde); }
+    .mensaje-error { background: #fee2e2; color: var(--rojo); }
+    
+    .form-grid { display: grid; gap: 20px; }
+    
+    @media (min-width: 640px) {
+      .form-grid-2 { grid-template-columns: 1fr 1fr; }
     }
-   
-    .mensaje-error {
-      background-color: #FFEBEE;
-      color: var(--rojo);
-    }
-   
-    /* Grid de formulario */
-    .form-grid {
-      display: grid;
-      gap: 20px;
-    }
-   
-    @media (min-width: 768px) {
-      .form-grid-2 {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-   
-    /* Oculto */
-    .hidden {
-      display: none !important;
-    }
-   
-    /* Estado vacío */
-    .empty-state {
-      text-align: center;
-      padding: 40px;
-      color: #666;
-    }
+    
+    .hidden { display: none !important; }
+    .empty-state { text-align: center; padding: 40px; color: var(--gris-500); }
   </style>
 </head>
 <body>
-  <!-- Pantalla de Login -->
   <div id="loginScreen">
     <div class="login-container">
       <h1 class="login-titulo">Panel Admin</h1>
@@ -354,24 +273,20 @@
     </div>
   </div>
 
-  <!-- Panel Principal -->
   <div id="adminPanel" class="hidden">
     <header class="admin-header">
-      <h1 class="admin-titulo">Punto Sur Sureste - Admin</h1>
+      <h1 class="admin-titulo">Sureste Claro - Admin</h1>
       <button class="btn-salir" id="btnSalir">Salir</button>
     </header>
 
     <div class="admin-container">
-      <!-- Tabs -->
       <div class="admin-tabs">
         <button class="admin-tab active" data-tab="lista">Publicaciones</button>
-        <button class="admin-tab" data-tab="crear">Nueva Publicación</button>
+        <button class="admin-tab" data-tab="crear">Nueva Publicacion</button>
       </div>
 
-      <!-- Mensajes globales -->
       <div id="mensajeGlobal" class="mensaje hidden"></div>
 
-      <!-- Panel: Lista de publicaciones -->
       <div id="panelLista" class="panel active">
         <h2 class="panel-titulo">Lista de Publicaciones</h2>
         <div class="tabla-container">
@@ -379,8 +294,8 @@
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Título</th>
-                <th>Categoría</th>
+                <th>Titulo</th>
+                <th>Categoria</th>
                 <th>Autor</th>
                 <th>Principal</th>
                 <th>Fecha</th>
@@ -388,77 +303,74 @@
               </tr>
             </thead>
             <tbody id="tablaBody">
-              <tr>
-                <td colspan="7" class="empty-state">Cargando...</td>
-              </tr>
+              <tr><td colspan="7" class="empty-state">Cargando...</td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Panel: Crear/Editar publicación -->
       <div id="panelCrear" class="panel">
-        <h2 class="panel-titulo" id="formTitulo">Nueva Publicación</h2>
+        <h2 class="panel-titulo" id="formTitulo">Nueva Publicacion</h2>
         <form id="formPublicacion">
           <input type="hidden" id="publicacionId">
-         
+          
           <div class="form-group">
-            <label class="form-label" for="titulo">Título *</label>
-            <input type="text" id="titulo" class="form-input" placeholder="Escribe el titular de la noticia" required>
+            <label class="form-label" for="titulo">Titulo *</label>
+            <input type="text" id="titulo" class="form-input" placeholder="Escribe el titular" required>
           </div>
-         
+          
           <div class="form-group">
             <label class="form-label" for="resumen">Resumen</label>
-            <textarea id="resumen" class="form-textarea" placeholder="Resumen corto de la noticia (opcional)" rows="3"></textarea>
+            <textarea id="resumen" class="form-textarea" placeholder="Resumen corto (opcional)" rows="3"></textarea>
           </div>
-         
+          
           <div class="form-group">
             <label class="form-label" for="cuerpo">Cuerpo de la noticia</label>
-            <textarea id="cuerpo" class="form-textarea" placeholder="Escribe el contenido completo de la noticia" rows="8"></textarea>
+            <textarea id="cuerpo" class="form-textarea" placeholder="Contenido completo" rows="8"></textarea>
           </div>
-         
+          
           <div class="form-grid form-grid-2">
             <div class="form-group">
-              <label class="form-label" for="categoria">Categoría *</label>
+              <label class="form-label" for="categoria">Categoria *</label>
               <select id="categoria" class="form-select" required>
-                <option value="">Selecciona una categoría</option>
+                <option value="">Selecciona</option>
                 <option value="sureste">Sureste</option>
                 <option value="nacional">Nacional</option>
                 <option value="seguridad">Seguridad</option>
                 <option value="deportes">Deportes</option>
               </select>
             </div>
-           
+            
             <div class="form-group">
               <label class="form-label" for="autor">Autor</label>
-              <input type="text" id="autor" class="form-input" placeholder="Nombre del autor" value="Redacción Punto Sur Sureste">
+              <input type="text" id="autor" class="form-input" placeholder="Nombre" value="Redaccion Sureste Claro">
             </div>
           </div>
-         
+          
           <div class="form-grid form-grid-2">
             <div class="form-group">
               <label class="form-label" for="cargo">Cargo (opcional)</label>
               <input type="text" id="cargo" class="form-input" placeholder="Ej: Corresponsal">
             </div>
-           
+            
             <div class="form-group">
-              <label class="form-label" for="imgUrl">URL de imagen principal</label>
+              <label class="form-label" for="imgUrl">URL de imagen</label>
               <input type="url" id="imgUrl" class="form-input" placeholder="https://...">
             </div>
           </div>
-         
+          
           <div class="form-group">
-            <label class="form-label" for="imgSmall">URL de miniatura (opcional)</label>
+            <label class="form-label" for="imgSmall">URL miniatura (opcional)</label>
             <input type="url" id="imgSmall" class="form-input" placeholder="https://...">
           </div>
-         
+          
           <div class="form-group">
             <label class="form-checkbox">
               <input type="checkbox" id="esPrincipal">
               <span>Marcar como noticia principal</span>
             </label>
           </div>
-         
+          
           <div style="display: flex; gap: 12px; margin-top: 24px;">
             <button type="submit" class="btn btn-success" id="btnGuardar">Publicar</button>
             <button type="button" class="btn btn-secondary" id="btnCancelar">Cancelar</button>
@@ -469,20 +381,11 @@
   </div>
 
   <script>
-    // =====================================================
-    // CONFIGURACIÓN - CAMBIAR POR TU URL DEL WORKER
-    // =====================================================
     const API_URL = 'https://puntosur.vinceremx.workers.dev';
-   
-    // =====================================================
-    // ESTADO
-    // =====================================================
+    
     let token = localStorage.getItem('admin_token') || '';
     let modoEdicion = false;
-   
-    // =====================================================
-    // ELEMENTOS DOM
-    // =====================================================
+    
     const loginScreen = document.getElementById('loginScreen');
     const adminPanel = document.getElementById('adminPanel');
     const loginForm = document.getElementById('loginForm');
@@ -498,10 +401,7 @@
     const btnGuardar = document.getElementById('btnGuardar');
     const btnCancelar = document.getElementById('btnCancelar');
     const mensajeGlobal = document.getElementById('mensajeGlobal');
-   
-    // =====================================================
-    // FUNCIONES DE AUTENTICACIÓN
-    // =====================================================
+    
     function verificarSesion() {
       if (token) {
         mostrarPanel();
@@ -510,216 +410,172 @@
         mostrarLogin();
       }
     }
-   
+    
     function mostrarLogin() {
       loginScreen.classList.remove('hidden');
       adminPanel.classList.add('hidden');
     }
-   
+    
     function mostrarPanel() {
       loginScreen.classList.add('hidden');
       adminPanel.classList.remove('hidden');
     }
-   
+    
     function cerrarSesion() {
       localStorage.removeItem('admin_token');
       token = '';
       mostrarLogin();
     }
-   
-    // =====================================================
-    // FUNCIONES DE API
-    // =====================================================
+    
     async function cargarPublicaciones() {
       try {
         const response = await fetch(`${API_URL}/api/admin/lista?limit=100`, {
           headers: { 'X-Admin-Token': token }
         });
-       
+        
         if (!response.ok) {
-          if (response.status === 401) {
-            cerrarSesion();
-            return;
-          }
-          throw new Error('Error al cargar publicaciones');
+          if (response.status === 401) { cerrarSesion(); return; }
+          throw new Error('Error');
         }
-       
+        
         const data = await response.json();
-        renderizarTabla(data.articulos || data || []);
+        renderizarTabla(data.articulos || []);
       } catch (error) {
         console.error(error);
-        tablaBody.innerHTML = '<tr><td colspan="7" class="empty-state">Error al cargar publicaciones</td></tr>';
+        tablaBody.innerHTML = '<tr><td colspan="7" class="empty-state">Error al cargar</td></tr>';
       }
     }
-   
+    
     async function guardarPublicacion(datos) {
-      const url = modoEdicion
-        ? `${API_URL}/api/admin/editar`
-        : `${API_URL}/api/admin/publicar`;
-     
-      const method = modoEdicion ? 'PUT' : 'POST';
-     
-      try {
-        const response = await fetch(url, {
-          method,
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Admin-Token': token
-          },
-          body: JSON.stringify(datos)
-        });
-       
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || 'Error al guardar');
-        }
-       
-        return await response.json();
-      } catch (error) {
-        throw error;
+      const url = modoEdicion ? `${API_URL}/api/admin/editar` : `${API_URL}/api/admin/publicar`;
+      
+      const response = await fetch(url, {
+        method: modoEdicion ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Admin-Token': token },
+        body: JSON.stringify(datos)
+      });
+      
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error || 'Error al guardar');
       }
+      
+      return await response.json();
     }
-   
+    
     async function eliminarPublicacion(id) {
-      try {
-        const response = await fetch(`${API_URL}/api/admin/eliminar?id=${id}`, {
-          method: 'DELETE',
-          headers: { 'X-Admin-Token': token }
-        });
-       
-        if (!response.ok) throw new Error('Error al eliminar');
-        return true;
-      } catch (error) {
-        throw error;
-      }
+      const response = await fetch(`${API_URL}/api/admin/eliminar?id=${id}`, {
+        method: 'DELETE',
+        headers: { 'X-Admin-Token': token }
+      });
+      if (!response.ok) throw new Error('Error');
+      return true;
     }
-   
-    // =====================================================
-    // FUNCIONES DE RENDERIZADO
-    // =====================================================
+    
     function renderizarTabla(publicaciones) {
       if (publicaciones.length === 0) {
         tablaBody.innerHTML = '<tr><td colspan="7" class="empty-state">No hay publicaciones</td></tr>';
         return;
       }
-     
+      
       tablaBody.innerHTML = publicaciones.map(pub => {
         const esPrincipal = pub.es_principal == 1 || pub.esprincipal;
         return `
         <tr>
           <td>${pub.id}</td>
-          <td class="tabla-titulo">${pub.titulo || 'Sin título'}</td>
+          <td class="tabla-titulo">${pub.titulo || 'Sin titulo'}</td>
           <td>${pub.categoria || '-'}</td>
-          <td>${pub.autor || 'Redacción'}</td>
-          <td><span class="badge ${esPrincipal ? 'badge-si' : 'badge-no'}">${esPrincipal ? 'Sí' : 'No'}</span></td>
+          <td>${pub.autor || 'Redaccion'}</td>
+          <td><span class="badge ${esPrincipal ? 'badge-si' : 'badge-no'}">${esPrincipal ? 'Si' : 'No'}</span></td>
           <td>${formatearFecha(pub.timestamp)}</td>
           <td class="acciones">
             <button class="btn-editar" onclick="editarPublicacion(${pub.id})">Editar</button>
             <button class="btn-eliminar" onclick="confirmarEliminar(${pub.id})">Eliminar</button>
           </td>
-        </tr>
-      `;
+        </tr>`;
       }).join('');
     }
-   
+    
     function formatearFecha(timestamp) {
       if (!timestamp) return '-';
-      const fecha = new Date(timestamp);
-      return fecha.toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
+      return new Date(timestamp).toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
     }
-   
+    
     function mostrarMensaje(texto, tipo = 'exito') {
       mensajeGlobal.textContent = texto;
       mensajeGlobal.className = `mensaje mensaje-${tipo}`;
       mensajeGlobal.classList.remove('hidden');
-     
-      setTimeout(() => {
-        mensajeGlobal.classList.add('hidden');
-      }, 4000);
+      setTimeout(() => mensajeGlobal.classList.add('hidden'), 4000);
     }
-   
-    // =====================================================
-    // FUNCIONES DE FORMULARIO
-    // =====================================================
+    
     function limpiarFormulario() {
       formPublicacion.reset();
       document.getElementById('publicacionId').value = '';
-      document.getElementById('autor').value = 'Redacción Punto Sur Sureste';
+      document.getElementById('autor').value = 'Redaccion Sureste Claro';
       modoEdicion = false;
-      formTitulo.textContent = 'Nueva Publicación';
+      formTitulo.textContent = 'Nueva Publicacion';
       btnGuardar.textContent = 'Publicar';
     }
-   
+    
     function cargarFormulario(pub) {
       document.getElementById('publicacionId').value = pub.id;
       document.getElementById('titulo').value = pub.titulo || '';
       document.getElementById('resumen').value = pub.resumen || '';
       document.getElementById('cuerpo').value = pub.cuerpo || '';
       document.getElementById('categoria').value = pub.categoria || '';
-      document.getElementById('autor').value = pub.autor || 'Redacción Punto Sur Sureste';
+      document.getElementById('autor').value = pub.autor || 'Redaccion Sureste Claro';
       document.getElementById('cargo').value = pub.cargo || '';
       document.getElementById('imgUrl').value = pub.img_url || pub.imgurl || '';
       document.getElementById('imgSmall').value = pub.img_small || '';
-      // El worker usa es_principal (snake_case)
       document.getElementById('esPrincipal').checked = pub.es_principal == 1 || pub.esprincipal || false;
-     
+      
       modoEdicion = true;
-      formTitulo.textContent = 'Editar Publicación';
+      formTitulo.textContent = 'Editar Publicacion';
       btnGuardar.textContent = 'Guardar cambios';
     }
-   
-    // =====================================================
-    // ACCIONES
-    // =====================================================
+    
     window.editarPublicacion = async function(id) {
       try {
         const response = await fetch(`${API_URL}/api/noticia?id=${id}`);
-        if (!response.ok) throw new Error('No se pudo cargar la publicación');
-       
+        if (!response.ok) throw new Error('No se pudo cargar');
+        
         const data = await response.json();
         const pub = data.articulo || data;
-        if (!pub) throw new Error('Publicación no encontrada');
+        if (!pub) throw new Error('No encontrada');
+        
         cargarFormulario(pub);
-       
-        // Cambiar a tab de crear/editar
+        
         tabs.forEach(t => t.classList.remove('active'));
         document.querySelector('[data-tab="crear"]').classList.add('active');
         panelLista.classList.remove('active');
         panelCrear.classList.add('active');
       } catch (error) {
-        mostrarMensaje('Error al cargar la publicación', 'error');
+        mostrarMensaje('Error al cargar', 'error');
       }
     };
-   
+    
     window.confirmarEliminar = async function(id) {
-      if (!confirm('¿Seguro que quieres eliminar esta publicación? Esta acción no se puede deshacer.')) {
-        return;
-      }
-     
+      if (!confirm('Eliminar esta publicacion?')) return;
+      
       try {
         await eliminarPublicacion(id);
-        mostrarMensaje('Publicación eliminada correctamente');
+        mostrarMensaje('Eliminada correctamente');
         cargarPublicaciones();
       } catch (error) {
-        mostrarMensaje('Error al eliminar la publicación', 'error');
+        mostrarMensaje('Error al eliminar', 'error');
       }
     };
-   
-    // =====================================================
-    // EVENT LISTENERS
-    // =====================================================
+    
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-     
       const inputToken = tokenInput.value.trim();
       if (!inputToken) return;
-     
-      // Verificar token haciendo una petición de prueba
+      
       try {
         const response = await fetch(`${API_URL}/api/admin/lista?limit=1`, {
           headers: { 'X-Admin-Token': inputToken }
         });
-       
+        
         if (response.ok) {
           token = inputToken;
           localStorage.setItem('admin_token', token);
@@ -731,85 +587,68 @@
           loginError.classList.remove('hidden');
         }
       } catch (error) {
-        loginError.textContent = 'Error de conexión';
+        loginError.textContent = 'Error de conexion';
         loginError.classList.remove('hidden');
       }
     });
-   
+    
     btnSalir.addEventListener('click', cerrarSesion);
-   
+    
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-       
+        
         const tabName = tab.dataset.tab;
         panelLista.classList.toggle('active', tabName === 'lista');
         panelCrear.classList.toggle('active', tabName === 'crear');
-       
-        if (tabName === 'crear' && !modoEdicion) {
-          limpiarFormulario();
-        }
-       
-        if (tabName === 'lista') {
-          cargarPublicaciones();
-        }
+        
+        if (tabName === 'crear' && !modoEdicion) limpiarFormulario();
+        if (tabName === 'lista') cargarPublicaciones();
       });
     });
-   
+    
     formPublicacion.addEventListener('submit', async (e) => {
       e.preventDefault();
-     
+      
       const datos = {
         titulo: document.getElementById('titulo').value.trim(),
         resumen: document.getElementById('resumen').value.trim(),
         cuerpo: document.getElementById('cuerpo').value.trim(),
         categoria: document.getElementById('categoria').value,
-        autor: document.getElementById('autor').value.trim() || 'Redacción Punto Sur Sureste',
+        autor: document.getElementById('autor').value.trim() || 'Redaccion Sureste Claro',
         cargo: document.getElementById('cargo').value.trim(),
         imgUrl: document.getElementById('imgUrl').value.trim(),
         imgSmall: document.getElementById('imgSmall').value.trim(),
         esPrincipal: document.getElementById('esPrincipal').checked
       };
-     
-      if (modoEdicion) {
-        datos.id = parseInt(document.getElementById('publicacionId').value);
-      }
-     
-      // Validar campos requeridos
-      if (!datos.titulo) {
-        mostrarMensaje('El título es obligatorio', 'error');
-        return;
-      }
-      if (!datos.categoria) {
-        mostrarMensaje('La categoría es obligatoria', 'error');
-        return;
-      }
-     
+      
+      if (modoEdicion) datos.id = parseInt(document.getElementById('publicacionId').value);
+      
+      if (!datos.titulo) { mostrarMensaje('El titulo es obligatorio', 'error'); return; }
+      if (!datos.categoria) { mostrarMensaje('La categoria es obligatoria', 'error'); return; }
+      
       try {
         btnGuardar.disabled = true;
         btnGuardar.textContent = 'Guardando...';
-       
+        
         await guardarPublicacion(datos);
-       
-        mostrarMensaje(modoEdicion ? 'Publicación actualizada' : 'Publicación creada');
+        mostrarMensaje(modoEdicion ? 'Actualizada' : 'Publicada');
         limpiarFormulario();
-       
-        // Volver a lista
+        
         tabs.forEach(t => t.classList.remove('active'));
         document.querySelector('[data-tab="lista"]').classList.add('active');
         panelCrear.classList.remove('active');
         panelLista.classList.add('active');
         cargarPublicaciones();
       } catch (error) {
-        console.error('Error:', error);
-        mostrarMensaje(error.message || 'Error al guardar', 'error');
+        mostrarMensaje(error.message || 'Error', 'error');
       } finally {
         btnGuardar.disabled = false;
         btnGuardar.textContent = modoEdicion ? 'Guardar cambios' : 'Publicar';
       }
     });
-   
+    
     btnCancelar.addEventListener('click', () => {
       limpiarFormulario();
       tabs.forEach(t => t.classList.remove('active'));
@@ -817,10 +656,7 @@
       panelCrear.classList.remove('active');
       panelLista.classList.add('active');
     });
-   
-    // =====================================================
-    // INICIALIZACIÓN
-    // =====================================================
+    
     verificarSesion();
   </script>
 </body>
