@@ -623,29 +623,26 @@
         esPrincipal: document.getElementById('esPrincipal').checked
       };
       
-      if (modoEdicion) datos.id = parseInt(document.getElementById('publicacionId').value);
-      
-      if (!datos.titulo) { mostrarMensaje('El titulo es obligatorio', 'error'); return; }
-      if (!datos.categoria) { mostrarMensaje('La categoria es obligatoria', 'error'); return; }
+      if (modoEdicion) {
+        datos.id = document.getElementById('publicacionId').value;
+      }
       
       try {
         btnGuardar.disabled = true;
-        btnGuardar.textContent = 'Guardando...';
-        
         await guardarPublicacion(datos);
-        mostrarMensaje(modoEdicion ? 'Actualizada' : 'Publicada');
+        mostrarMensaje(modoEdicion ? 'Actualizado correctamente' : 'Publicado correctamente');
         limpiarFormulario();
         
         tabs.forEach(t => t.classList.remove('active'));
         document.querySelector('[data-tab="lista"]').classList.add('active');
         panelCrear.classList.remove('active');
         panelLista.classList.add('active');
+        
         cargarPublicaciones();
       } catch (error) {
-        mostrarMensaje(error.message || 'Error', 'error');
+        mostrarMensaje(error.message || 'Error al guardar', 'error');
       } finally {
         btnGuardar.disabled = false;
-        btnGuardar.textContent = modoEdicion ? 'Guardar cambios' : 'Publicar';
       }
     });
     
